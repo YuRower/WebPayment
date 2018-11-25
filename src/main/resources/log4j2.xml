@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="server">/usr/local/Cellar/tomcat/8.5.24/libexec</Property>
+    </Properties>
+ 
+    <Appenders>
+        <RollingFile name="fileLogger" fileName="${server}/logs/Payments.log" 
+        		filePattern="${basePath}/logs/Payments-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+ 
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
+        <Console name="consoleErr" target="SYSTEM_ERR">
+            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level = "trace">
+			<appender-ref ref="console" level = "trace" />        
+            	<appender-ref ref="console" level = "debug"/>
+            	<appender-ref ref="fileLogger" level ="debug"/>
+            	<appender-ref ref="fileLogger" level = "error"/>
+        </Root>    
+    </Loggers>
+</Configuration>

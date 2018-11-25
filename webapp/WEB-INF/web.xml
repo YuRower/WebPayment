@@ -1,0 +1,117 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+
+	<display-name>Final task</display-name>
+
+	<!-- Welcome files -->
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- Listeners -->
+	<listener>
+		<listener-class>ua.khpi.test.finalTask.web.listeners.ContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>ua.khpi.test.finalTask.web.listeners.SessionListener</listener-class>
+	</listener>
+
+
+	<!-- Servlet-controller -->
+	<servlet>
+		<servlet-name>Controller</servlet-name>
+		<servlet-class>ua.khpi.test.finalTask.web.Controller</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Controller</servlet-name>
+		<url-pattern>/controller</url-pattern>
+	</servlet-mapping>
+
+	<!-- Security filter -->
+	<filter>
+		<display-name>SecurityFilter</display-name>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>ua.khpi.test.finalTask.web.filter.SecurityFilter</filter-class>
+		<init-param>
+			<param-name>admin</param-name>
+			<param-value>listRequests actionsPage adminAction
+			showActionConfirmed requestResponse getAccountsGreater userList listAllAccounts
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>user</param-name>
+			<param-value>initializeUserSession listCards lockAccount
+			sortAccounts sortTransactions changeAccountsOrder changePaymentsOrder
+			replanishAccount listAccounts listCart redirectReplenishAccount 
+			redirectReplenishmentCompleted redirectAccountSettings 
+			redirectNewPayment newPayment clearCart executeCartPayments
+			listTransactions createNewAccount redirectNewAccount 
+			closeAccount unlockAccount changeAccountName getTransactionReport
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>superuser</param-name>
+			<param-value>listAdmins superuserAction addAdmin</param-value>
+		</init-param>
+		<init-param>
+			<param-name>common</param-name>
+			<param-value>logout commandNotFound viewSettings</param-value>
+		</init-param>
+		<init-param>
+			<param-name>out-of-control</param-name>
+			<param-value>login registration verify redirectRegistration
+			redirectRegistrationCompleted redirectValidationCompleted language
+			</param-value>
+		</init-param>
+	</filter>
+
+	<!-- Encoding support filter -->
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>ua.khpi.test.finalTask.web.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/WEB-INF/jsp/*</url-pattern>
+		<servlet-name>Controller</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
+		<servlet-name>Controller</servlet-name>
+	</filter-mapping>
+
+	<!-- Session Configuration -->
+	<session-config>
+		<session-timeout>10</session-timeout>
+	</session-config>
+
+	<!-- Datasource reference -->
+	<resource-ref>
+		<description>MySQL DB Connection Pool</description>
+		<res-ref-name>jdbc/web_payment</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+	<!-- Mail properties -->
+	<context-param>
+		<param-name>mail</param-name>
+		<param-value>/WEB-INF/config/mail.properties</param-value>
+	</context-param>
+	<!-- I18n properties -->
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>ua.khpi.test.finalTask.i18n.i18n</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+		<param-value>en</param-value>
+	</context-param>
+</web-app>

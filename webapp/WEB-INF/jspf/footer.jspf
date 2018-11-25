@@ -1,0 +1,5 @@
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf"%>
+
+<tr>
+	<td id="footer">&copy;<fmt:message key="footer.name"/> (Final task, EPAM-KhPI Java Training), 2018 <a href="mailto:dummy.mail.test.01@gmail.com"><fmt:message key="footer.mail"/></a></td>
+</tr>

@@ -1,0 +1,67 @@
+<%--=========================================================================== 
+Header (top area). 
+===========================================================================--%> 
+
+<%@ page import="ua.khpi.test.finalTask.entity.enums.UserType" %>
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<tr>
+<td id="header">
+<c:if test="${not empty language}">
+<fmt:setLocale value="${language}" />
+</c:if>
+<fmt:setBundle basename="ua.khpi.test.finalTask.i18n.i18n"/>
+
+<div id="rightHeader">
+	<a href="controller?command=language&lang=en">
+		<fmt:message key="header.lang.en"/>
+	</a> 
+	<a href="controller?command=language&lang=ru">
+		<fmt:message key="header.lang.ru"/>
+	</a> 
+</div>
+
+<c:if test="${not empty user}">
+
+<div id="leftHeader">
+	<c:choose>
+		<c:when test="${userType.name == 'admin' }">
+			<a href="controller?command=listRequests"><fmt:message key="header.req"/></a> &nbsp;
+			<a href="controller?command=actionsPage"><fmt:message key="header.act"/></a> &nbsp;
+			<a href="controller?command=userList"><fmt:message key="header.cl"/></a>&nbsp;		
+			<a href="controller?command=listAllAccounts"><fmt:message key="header.accs"/></a>&nbsp;			
+				
+			
+		</c:when>
+		<c:when test="${userType.name == 'user'}">
+			<a href="controller?command=listAccounts"><fmt:message key="header.accs"/></a> &nbsp;
+			<a href="controller?command=listCart"><fmt:message key="header.cart"/></a> &nbsp;
+		</c:when>
+	</c:choose>
+</div>
+
+<div id="rightHeader" >
+
+	<c:out value="${user.name} ${user.surname}"/>
+	
+	<c:if test="${not empty userType}">
+		<c:out value="(${userType.name})"/>
+	</c:if>
+
+	<a href="controller?command=logout">
+		<fmt:message key="header.logout"/>
+	</a> 	
+
+</div>
+</c:if>
+
+<c:if test="${empty user and title ne 'Login'}">
+	<div id="rightHeader">
+		<a href="login.jsp"><fmt:message key="header.login"/></a>
+		
+	</div>
+</c:if>
+	</td>
+</tr>
+
