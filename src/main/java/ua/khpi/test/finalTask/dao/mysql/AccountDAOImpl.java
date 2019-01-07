@@ -33,11 +33,14 @@ public class AccountDAOImpl implements AccountDAO {
 	public static final String ACCOUNT_NAME = "name";
 	public static final String ACCOUNT_BALANCE = "balance";
 	public static final String ACCOUNT_STATUS = "account_status_id";
+	public static final String ACCOUNT_CARD_ID = "card_id";
+
+	
 	private static final String SQL_FIND_ALL_ACCOUNTS = "SELECT * FROM accounts";
 	private static final String SQL_FIND_ACCOUNT_BY_ID = "SELECT * FROM accounts WHERE account_id=?";
 	private static final String SQL_UPDATE_ACCOUNT = "UPDATE accounts SET user_id = ?, name = ?, balance = ?,"
 			+ " account_status_id = ? WHERE account_id=?";
-	private static final String SQL_INSERT_ACCOUNT = "INSERT INTO accounts VALUES (DEFAULT,?, ?, DEFAULT, DEFAULT)";
+	private static final String SQL_INSERT_ACCOUNT = "INSERT INTO accounts VALUES (DEFAULT,?, ?, DEFAULT, DEFAULT,DEFAULT)";
 	private static final String SQL_FIND_ACCOUNTS_BY_USER_ID = "SELECT * FROM accounts WHERE user_id=?";
 
 	@Override
@@ -136,6 +139,7 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 		return result;
 	}
+
 	@Override
 	public List<Account> getAllAccounts() throws DBException, ConnectionException {
 		List<Account> result = new ArrayList<>();
@@ -157,7 +161,6 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 		return result;
 	}
-
 
 	@Override
 	public boolean removeEntity(Account entity) throws DBException {

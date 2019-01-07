@@ -14,6 +14,8 @@ public abstract class AbstractDAOFactory {
 	public abstract PaymentsDAO getPaymentsDAO();
 	public abstract RequestDAO getRequestDAO();
 	public abstract UserAccountsCountDAO getUserAccountsCountDAO();
+	public abstract CardDAO getCardDAO();
+
 
 	public static AbstractDAOFactory getDAOFactory(FactoryTypes type)  {
 

@@ -16,6 +16,7 @@ import ua.khpi.test.finalTask.connection.ConnectionPool;
 import ua.khpi.test.finalTask.connection.ProxyConnection;
 import ua.khpi.test.finalTask.dao.AbstractDAOFactory;
 import ua.khpi.test.finalTask.dao.AccountDAO;
+import ua.khpi.test.finalTask.dao.CardDAO;
 import ua.khpi.test.finalTask.dao.PaymentsDAO;
 import ua.khpi.test.finalTask.dao.RequestDAO;
 import ua.khpi.test.finalTask.dao.UserAccountsCountDAO;
@@ -38,7 +39,7 @@ public class MysqlDAOFactory extends AbstractDAOFactory {
 		return instance;
 	}
 
-	private MysqlDAOFactory(){
+	private MysqlDAOFactory() {
 	}
 
 	public ProxyConnection getProxyConnection() throws SQLException, ConnectionException {
@@ -83,8 +84,6 @@ public class MysqlDAOFactory extends AbstractDAOFactory {
 		close(con);
 	}
 
-
-
 	@Override
 	public UserDAO getUserDAO() {
 		return new UserDAOImpl(instance);
@@ -108,6 +107,11 @@ public class MysqlDAOFactory extends AbstractDAOFactory {
 	@Override
 	public UserAccountsCountDAO getUserAccountsCountDAO() {
 		return new UserAccountsCountDAOImpl(instance);
+	}
+
+	@Override
+	public CardDAO getCardDAO() {
+		return new CardDAOImpl(instance);
 	}
 
 }

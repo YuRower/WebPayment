@@ -56,9 +56,11 @@ public class RegistrationCommand extends Command {
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		Middleware middleware = new SurnameValidator(surname);
+		
 		middleware.linkWith(new NameValidator(name))
 				.linkWith(new PasswordValidator(password)).linkWith(new EmailValidator(email));
 		handler.setMiddleware(middleware);
+		
 		boolean success;
 		do {
 			success = handler.validate();
