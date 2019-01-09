@@ -7,6 +7,7 @@ import ua.khpi.test.finalTask.dao.UserAccountsCountDAO;
 import ua.khpi.test.finalTask.dao.UserDAO;
 import ua.khpi.test.finalTask.dao.AbstractDAOFactory.FactoryTypes;
 import ua.khpi.test.finalTask.dao.AccountDAO;
+import ua.khpi.test.finalTask.dao.CardDAO;
 
 public class ApplicationLogic {
 	protected static AbstractDAOFactory mysqlFactory = AbstractDAOFactory.getDAOFactory(FactoryTypes.MYSQL);
@@ -15,7 +16,7 @@ public class ApplicationLogic {
     RequestDAO requestDao = mysqlFactory.getRequestDAO();
     UserAccountsCountDAO userAccountsDao = mysqlFactory.getUserAccountsCountDAO();
     AccountDAO accountDao = mysqlFactory.getAccountDAO();
-    
+    CardDAO cardDao= mysqlFactory.getCardDAO();
 
 	
 }

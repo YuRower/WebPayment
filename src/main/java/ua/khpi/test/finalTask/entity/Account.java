@@ -2,13 +2,35 @@ package ua.khpi.test.finalTask.entity;
 
 import java.math.BigDecimal;
 
-public class Account extends AbstractEntity {
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class Account extends AbstractEntity {
 
 	private int userId;
 	private String name;
 	private BigDecimal balance;
 	private int accountStatusId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "card_fee_id")
+	private Card cards;
+
+	/**
+	 * @return the card
+	 */
+	public Card getCard() {
+		return cards;
+	}
+
+	/**
+	 * @param card the card to set
+	 */
+	public void setCard(Card card) {
+		this.cards = card;
+	}
 
 	public int getUserId() {
 		return this.userId;

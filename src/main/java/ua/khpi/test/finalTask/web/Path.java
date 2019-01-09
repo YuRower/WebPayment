@@ -18,6 +18,8 @@ public final class Path {
 	public static final String PAGE_CART = "/WEB-INF/jsp/user/cart.jsp";
 	public static final String PAGE_TRANSACTIONS = "/WEB-INF/jsp/user/transactions.jsp";
 	public static final String PAGE_NEW_ACCOUNT = "/WEB-INF/jsp/user/new_account.jsp";
+	public static final String PAGE_NEW_CARD = "/WEB-INF/jsp/user/new_card.jsp";
+
 	public static final String PAGE_LIST_ADMINS = "/WEB-INF/jsp/superuser/superuser_page.jsp";
 	public static final String PAGE_ADMINS_ACTIONS = "/WEB-INF/jsp/admin/show_actions.jsp";
 	public static final String PAGE_ADMINS_ACTION_CONFIRMED = "/WEB-INF/jsp/admin/action_confirmed.jsp";
@@ -27,6 +29,7 @@ public final class Path {
 
 
 	// commands
+	public static final String COMMAND_LIST_CARDS = "controller?command=listCards";
 	public static final String COMMAND_LIST_ACCOUNTS = "controller?command=listAccounts";
 	public static final String COMMAND_LIST_TRANSACTIONS= "controller?command=listTransactions";
 	public static final String COMMAND_LIST_REQUESTS = "controller?command=listRequests";

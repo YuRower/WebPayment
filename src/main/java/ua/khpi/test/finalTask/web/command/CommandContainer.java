@@ -33,12 +33,15 @@ import ua.khpi.test.finalTask.web.command.user.ChangePaymentsOrder;
 import ua.khpi.test.finalTask.web.command.user.ClearCartCommand;
 import ua.khpi.test.finalTask.web.command.user.CloseAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.CreateNewAccountCommand;
+import ua.khpi.test.finalTask.web.command.user.CreateNewCardCommand;
 import ua.khpi.test.finalTask.web.command.user.ExecuteCartPaymentsCommand;
 import ua.khpi.test.finalTask.web.command.user.InitializeUserSessionCommand;
 import ua.khpi.test.finalTask.web.command.user.ListTransactionsCommand;
 import ua.khpi.test.finalTask.web.command.user.ListUserAccountsCommand;
+import ua.khpi.test.finalTask.web.command.user.ListUserCardsCommand;
 import ua.khpi.test.finalTask.web.command.user.LockAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.NewPaymentCommand;
+import ua.khpi.test.finalTask.web.command.user.RedirectNewCardCommand;
 import ua.khpi.test.finalTask.web.command.user.ReplenishAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.SortAccountsCommand;
 import ua.khpi.test.finalTask.web.command.user.SortPaymentsCommand;
@@ -55,11 +58,11 @@ import ua.khpi.test.finalTask.web.command.user.redirect.RedirectReplenishmentCom
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectValidationCompletedCommand;
 
 public class CommandContainer {
-	
+
 	private static final Logger LOG = LogManager.getLogger(CommandContainer.class);
-	
+
 	private static Map<String, Command> commands = new TreeMap<String, Command>();
-	
+
 	static {
 		// common commands
 		commands.put("login", new LoginCommand(new CommonLogic()));
@@ -71,9 +74,11 @@ public class CommandContainer {
 		commands.put("redirectRegistrationCompleted", new RedirectRegistrationCompletedCommand());
 		commands.put("redirectValidationCompleted", new RedirectValidationCompletedCommand());
 		commands.put("language", new ChangeLanguageCommand());
-		
+
 		// user commands
 		commands.put("initializeUserSession", new InitializeUserSessionCommand());
+		commands.put("listCards", new ListUserCardsCommand(new UserLogic()));
+
 		commands.put("lockAccount", new LockAccountCommand(new UserLogic()));
 		commands.put("sortAccounts", new SortAccountsCommand());
 		commands.put("sortTransactions", new SortPaymentsCommand());
@@ -91,12 +96,16 @@ public class CommandContainer {
 		commands.put("executeCartPayments", new ExecuteCartPaymentsCommand(new UserLogic()));
 		commands.put("listTransactions", new ListTransactionsCommand(new UserLogic()));
 		commands.put("createNewAccount", new CreateNewAccountCommand(new UserLogic()));
+		commands.put("createNewCard", new CreateNewCardCommand(new UserLogic()));
+
 		commands.put("redirectNewAccount", new RedirectNewAccountCommand());
+		commands.put("redirectNewCard", new RedirectNewCardCommand());
+
 		commands.put("closeAccount", new CloseAccountCommand(new UserLogic()));
 		commands.put("unlockAccount", new RequestUnlockAccountCommand(new UserLogic()));
 		commands.put("changeAccountName", new ChangeAccountNameCommand(new UserLogic()));
 		commands.put("getTransactionReport", new TransactionReportCommand());
-		
+
 		// admin commands
 		commands.put("listAllAccounts", new AllAccountsCommand(new AdminLogic()));
 		commands.put("listRequests", new ListRequestsCommand(new AdminLogic()));
@@ -105,25 +114,24 @@ public class CommandContainer {
 		commands.put("showActionConfirmed", new ShowActionConfirmedCommand());
 		commands.put("requestResponse", new RequestResponseCommand(new AdminLogic()));
 		commands.put("getAccountsGreater", new AccountsGreaterCommand(new AdminLogic()));
-		commands.put("userList", new GetUserListCommand(new AdminLogic()));		
+		commands.put("userList", new GetUserListCommand(new AdminLogic()));
 
-		//superuser commands
+		// superuser commands
 		commands.put("listAdmins", new ListAdminsCommand(new Superuser()));
 		commands.put("superuserAction", new SuperuserActionCommand(new Superuser()));
 		commands.put("addAdmin", new AddAdminCommand(new Superuser()));
-		
+
 		LOG.debug("Command container was successfully initialized");
 		LOG.trace("Number of commands --> " + commands.size());
 	}
 
-	
 	public static Command get(String commandName) {
 		if (commandName == null || !commands.containsKey(commandName)) {
 			LOG.trace("Command not found, name --> " + commandName);
-			return commands.get("commandNotFound"); 
+			return commands.get("commandNotFound");
 		}
-		
+
 		return commands.get(commandName);
 	}
-	
+
 }

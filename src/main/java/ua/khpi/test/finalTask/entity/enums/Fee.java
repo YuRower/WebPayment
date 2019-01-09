@@ -3,7 +3,7 @@ package ua.khpi.test.finalTask.entity.enums;
 import ua.khpi.test.finalTask.entity.Card;
 
 public enum Fee {
-	GOLD(1), SILVER(0), DEFAULT(-1);
+	GOLD(2), SILVER(0), DEFAULT(-1);
 	private int percentage;
 
 	private Fee(int percentage) {

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ua.khpi.test.finalTask.entity.Card;
 import ua.khpi.test.finalTask.entity.Payment;
 import ua.khpi.test.finalTask.entity.User;
 import ua.khpi.test.finalTask.exception.ApplicationException;
@@ -39,11 +40,10 @@ public class InitializeUserSessionCommand extends Command {
 
 		LOG.trace("Creating container for prepared payments");
 		ArrayList<Payment> preparedPayments = getPreparedPayments(session, request);
-
 		session.setAttribute("prepPayments", preparedPayments);
 
 		LOG.debug("Command finished");
-		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_ACCOUNTS);
+		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_CARDS);
 	}
 
 	@SuppressWarnings("unchecked")

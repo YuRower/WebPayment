@@ -11,10 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
-import ua.khpi.test.finalTask.dao.AbstractDAOFactory;
-import ua.khpi.test.finalTask.dao.AbstractDAOFactory.FactoryTypes;
-import ua.khpi.test.finalTask.dao.AccountDAO;
 import ua.khpi.test.finalTask.entity.Account;
 import ua.khpi.test.finalTask.entity.User;
 import ua.khpi.test.finalTask.exception.ApplicationException;

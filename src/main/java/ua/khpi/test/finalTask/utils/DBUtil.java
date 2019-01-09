@@ -1,12 +1,26 @@
 package ua.khpi.test.finalTask.utils;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
-public class DBUtil {
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("PaymentCard");
 
-	public static EntityManagerFactory getEmFactory() {
-		return emf;
-	}
+	public class DBUtil {
+
+	    private static SessionFactory factory;
+
+	    static {
+	        try {
+	             factory = new Configuration()
+	                    .configure("hibernate.cfg.xml")
+	                    .buildSessionFactory();
+	        } catch (HibernateException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    public static SessionFactory getSessionFactory() {
+	        return factory;
+	    }
+
 }

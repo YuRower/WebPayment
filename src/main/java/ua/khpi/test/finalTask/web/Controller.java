@@ -1,11 +1,13 @@
 package ua.khpi.test.finalTask.web;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +35,13 @@ public class Controller extends HttpServlet {
 	private void process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		LOG.debug("Controller starts");
+		/*HttpSession session = request.getSession();
+        Enumeration sessionAtr = session.getAttributeNames();
+        while (sessionAtr.hasMoreElements()) {
+    		LOG.trace("Request parameter: command --> " +(String) sessionAtr.nextElement());
 
+        }
+        LOG.trace("iddddddddddddd"+ request.getSession().getId());*/
 		String commandName = request.getParameter("command");
 		LOG.trace("Request parameter: command --> " + commandName);
 

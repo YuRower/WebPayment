@@ -1,16 +1,22 @@
 package ua.khpi.test.finalTask.logic;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ua.khpi.test.finalTask.connection.util.TransactionManager;
 import ua.khpi.test.finalTask.entity.Account;
+import ua.khpi.test.finalTask.entity.Card;
 import ua.khpi.test.finalTask.entity.Payment;
 import ua.khpi.test.finalTask.entity.Request;
 import ua.khpi.test.finalTask.exception.ConnectionException;
 import ua.khpi.test.finalTask.exception.DBException;
 
 public class UserLogic extends ApplicationLogic {
+	private static final Logger LOG = LogManager.getLogger(UserLogic.class);
 
 	public Account getEntityById(int accountId) throws DBException, ConnectionException {
 		try {
@@ -70,6 +76,11 @@ public class UserLogic extends ApplicationLogic {
 		}
 	}
 
+	public void insertCard(Card card) throws DBException, ConnectionException {
+		cardDao.addEntity(card);
+		LOG.debug("CreditCard was added");
+	}
+
 	public List<Payment> getPaymentsByAccount(int accountId) throws DBException, ConnectionException {
 		try {
 			return paymentDao.getPaymentsByAccount(accountId);
@@ -104,5 +115,10 @@ public class UserLogic extends ApplicationLogic {
 			TransactionManager.rollbackTransaction();
 
 		}
+	}
+
+	public List<Card> getAllUserCards() {
+		List<Card> cards = cardDao.getAllUserCards();
+		return cards ;
 	}
 }
