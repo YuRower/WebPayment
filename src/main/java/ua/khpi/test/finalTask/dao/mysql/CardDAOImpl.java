@@ -3,8 +3,14 @@ package ua.khpi.test.finalTask.dao.mysql;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.NamedQuery;
 import org.jboss.logging.Logger;
 import ua.khpi.test.finalTask.dao.CardDAO;
 import ua.khpi.test.finalTask.entity.Card;
@@ -85,38 +91,26 @@ public class CardDAOImpl implements CardDAO {
 		 */
 	}
 
-	
-	/*public ArrayList<Card> getAllUserCards() {
-		sessionFactory = DBUtil.getSessionFactory();
+	/*
+	 * public ArrayList<Card> getAllUserCards() { sessionFactory =
+	 * DBUtil.getSessionFactory();
+	 * 
+	 * Session session = sessionFactory.openSession(); ArrayList<Card> cards = new
+	 * ArrayList<>(session.createQuery("SELECT a FROM cards a",
+	 * Card.class).getResultList()); LOGGER.info("\nSuccessfully received" + cards
+	 * ); return cards; }
+	 */
 
-		Session session = sessionFactory.openSession();
-		ArrayList<Card> cards = new ArrayList<>(session.createQuery("SELECT a FROM cards a", Card.class).getResultList());
-		LOGGER.info("\nSuccessfully received" + cards );
-		return cards;
-	}*/
-	@SuppressWarnings("deprecation")
 	@Override
 	public List<Card> getAllUserCards() {
-		List<Card> cards = new ArrayList<>();	
 		sessionFactory = DBUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();	
+		Session session = sessionFactory.openSession();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Card> cq = cb.createQuery(Card.class);
+		Root<Card> rootEntry = cq.from(Card.class);
+		CriteriaQuery<Card> all = cq.select(rootEntry);
 
-		try {
-			
-			session.beginTransaction();
-
-			cards = session.createQuery("FROM cards").list();
-		} catch(Exception sqlException) {
-			if(null != session.getTransaction()) {
-				LOGGER.info("\n.......Transaction Is Being Rolled Back.......\n");
-				session.getTransaction().rollback();
-			}
-			sqlException.printStackTrace();
-		} finally {
-			if(session != null) {
-				session.close();
-			}
-		}
-		return cards;
+		TypedQuery<Card> allQuery = session.createQuery(all);
+		return allQuery.getResultList();
 	}
 }

@@ -41,14 +41,15 @@ public class CreateNewAccountCommand extends Command {
 		checkName(accName);
 
 		User currUser = (User) session.getAttribute("user");
+		String card_id = String.valueOf(session.getAttribute("current_card"));
 
-		addAccount(accName, currUser);
+		addAccount(accName, currUser , card_id);
 
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_ACCOUNTS);
 	}
 
-	private void addAccount(String accName, User currUser) throws ApplicationException {
+	private void addAccount(String accName, User currUser ,String cardID) throws ApplicationException {
 		LOG.trace("User --> " + currUser);
 		List<Account> userAccs = userLogic.getAccountsByUserId(currUser.getId());
 		LOG.trace("User has " + userAccs.size() + " accounts");
@@ -60,6 +61,7 @@ public class CreateNewAccountCommand extends Command {
 		Account newAccount = new Account();
 		newAccount.setName(accName);
 		newAccount.setUserId(currUser.getId());
+		newAccount.setCardid(Integer.parseInt(cardID));
 		userLogic.addEntity(newAccount);
 		LOG.trace("Account added");
 	}

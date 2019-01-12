@@ -48,7 +48,7 @@
 			redirectReplenishmentCompleted redirectAccountSettings 
 			redirectNewPayment newPayment clearCart executeCartPayments
 			listTransactions createNewAccount redirectNewAccount 
-			closeAccount unlockAccount changeAccountName getTransactionReport
+			closeAccount unlockAccount changeAccountName getTransactionReport redirectNewCard createNewCard 
 			</param-value>
 		</init-param>
 		<init-param>
@@ -62,8 +62,13 @@
 		<init-param>
 			<param-name>out-of-control</param-name>
 			<param-value>login registration verify redirectRegistration
-			redirectRegistrationCompleted redirectValidationCompleted language
-			</param-value>
+			redirectRegistrationCompleted redirectValidationCompleted language numCard
+			</param-value> 
+		</init-param>
+		<init-param>
+			<param-name>with-param</param-name>
+			<param-value>numCard
+</param-value>
 		</init-param>
 	</filter>
 

@@ -67,7 +67,6 @@ Style for the right located head menu (DIV tag at right)
 Content styles (TD tag in the main middle row)
 ***************************************************************/
 .content {
-	height: 100%;
 	background: #f6fff4;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -136,4 +135,41 @@ Settings form (settings.jsp)
 
 #settings_form > input[type=submit] {
 	margin-top: 10px;
+}
+/***************************************************************
+Settings collapsible (new_card.jsp)
+***************************************************************/
+.collapsible {
+  background-color: #d3fcc9;
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content_text {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.btn-link{
+  border:none;
+  outline:none;
+  background:none;
+  cursor:pointer;
+  color:#0000EE;
+  padding:0;
+  text-decoration:underline;
+  font-family:inherit;
+  font-size:inherit;
 }

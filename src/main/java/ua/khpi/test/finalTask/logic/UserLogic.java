@@ -121,4 +121,13 @@ public class UserLogic extends ApplicationLogic {
 		List<Card> cards = cardDao.getAllUserCards();
 		return cards ;
 	}
+
+	public List<Account> getAccountsCardId( int id) throws DBException, ConnectionException {
+		try {
+			return accountDao.getAccountsByCardID(id);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }

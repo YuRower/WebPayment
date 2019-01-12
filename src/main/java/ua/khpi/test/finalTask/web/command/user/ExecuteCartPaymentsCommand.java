@@ -44,6 +44,7 @@ public class ExecuteCartPaymentsCommand extends Command {
 		LOG.debug("Command starts");
 
 		HttpSession session = request.getSession();
+		
 
 		executeReplenishments(session);
 
@@ -53,6 +54,8 @@ public class ExecuteCartPaymentsCommand extends Command {
 
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_REDIRECT_TRANSACTION_COMPLETED);
 	}
+
+	
 
 	private void executeRemittances(HttpSession session) throws ApplicationException {
 

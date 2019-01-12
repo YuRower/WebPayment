@@ -45,6 +45,7 @@
 						<br />
 					</c:otherwise>
 				</c:choose>
+				
 				<form action="controller" method="POST"
 					onsubmit="return confirm('<fmt:message key="acc.set.close.confirm"/>');">
 					<input type="hidden" name="command" value="closeAccount" /> <input

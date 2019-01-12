@@ -37,6 +37,14 @@ Header (top area).
 		<c:when test="${userType.name == 'user'}">
 			<a href="controller?command=listAccounts"><fmt:message key="header.accs"/></a> &nbsp;
 			<a href="controller?command=listCart"><fmt:message key="header.cart"/></a> &nbsp;
+			<br>
+			<c:forEach var = "card" items = "${cards}" >
+			<form action="controller" method="post">
+			<input type="hidden" name="command" value="numCard" />			
+ 					 <button type="submit" name="current_card" value="${card.id}" class="btn-link">Card ${card.cardNumber }</button>
+			</form>
+			<%-- <a href="<c:url value='controller?command=numCard'/>">Card ${card.cardNumber }</a> &nbsp;<a href="controller?command=listCart"><fmt:message key="header.cart"/></a> &nbsp;--%>
+			</c:forEach>
 		</c:when>
 	</c:choose>
 </div>

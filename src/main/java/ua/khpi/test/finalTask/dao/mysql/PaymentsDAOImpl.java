@@ -37,8 +37,8 @@ public class PaymentsDAOImpl implements PaymentsDAO {
 	private static final String SQL_FIND_PAYMENT_BY_ID = "SELECT * FROM payments WHERE payment_id=?";
 	private static final String SQL_FIND_PAYMENTS_BY_ACCOUNT = "SELECT DISTINCT * FROM payments WHERE account_id_from=? OR account_id_to=?";
 	private static final String SQL_INSERT_PAYMENT = "INSERT INTO payments VALUES (DEFAULT, now(), ?, ?, ?, 0)";
-	private static final String SQL_PAYMENT_FROM = "UPDATE accounts SET balance = (balance - ?) where account_id = ?";
-	private static final String SQL_PAYMENT_TO = "UPDATE accounts SET balance = (balance + ?) where account_id = ?";
+	private static final String SQL_PAYMENT_FROM = "UPDATE accounts SET balance = (balance - ?) where id = ?";
+	private static final String SQL_PAYMENT_TO = "UPDATE accounts SET balance = (balance + ?) where id = ?";
 	private static final String SQL_REPLENISH_PAYMENT = "INSERT INTO payments VALUES (DEFAULT, now(), ?, null, ?, 1)";
 	
 	@Override

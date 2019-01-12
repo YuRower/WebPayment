@@ -1,5 +1,6 @@
 package ua.khpi.test.finalTask.exception;
 
+import org.apache.logging.log4j.Marker;
 
 public class Messages {
 
@@ -67,5 +68,5 @@ public class Messages {
 	public static final String ERR_CANNOT_OBTAIN_PAYMENTS_BY_ACCOUNT = "Cannot obtain payments by account id";
 
 	public static final String ERR_CANNOT_GET_USER_ACCS = "Cannot execute query";
-	
+
 }

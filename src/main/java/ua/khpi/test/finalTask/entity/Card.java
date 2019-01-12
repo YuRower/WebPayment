@@ -3,7 +3,6 @@ package ua.khpi.test.finalTask.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,11 +12,10 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name="cards")
 public class Card extends AbstractEntity {
-	
-	
 	
 	@Override
 	public String toString() {
@@ -25,6 +23,9 @@ public class Card extends AbstractEntity {
 				+ cardFeeid + ", account=" + account + "]";
 	}
 	
+	public Card() {
+		
+	}
 	@Column (name = "card_number")
 	private BigDecimal cardNumber;
 	
@@ -50,7 +51,7 @@ public class Card extends AbstractEntity {
 		this.account = account;
 	}
 
-	@OneToMany(mappedBy = "cards", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToMany(mappedBy = "cards", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Account> account;
 
 	public Card(BigDecimal cardNumber, LocalDate expDate, String cardName, int cardFeeid) {

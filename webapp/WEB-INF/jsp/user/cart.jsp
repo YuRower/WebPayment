@@ -49,6 +49,10 @@
 							<input type="submit" value = "<fmt:message key="cart.clear"/>"/>
 						</form>
 				</c:if>
+				
+				<p>
+							<a href="controller?command=redirectNewCard"><fmt:message key="acc.enum.click"/></a> <fmt:message key="acc.enum.newcard"/>
+				</p>
 				<c:if test="${empty prepPayments}">
 					<h3><fmt:message key="cart.null"/></h3>
 				</c:if>

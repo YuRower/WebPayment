@@ -28,7 +28,7 @@ public class AccountDAOImpl implements AccountDAO {
 		this.factory = factory;
 	}
 
-	public static final String ACCOUNT_ID = "account_id";
+	public static final String ACCOUNT_ID = "id";
 	public static final String ACCOUNT_USER_ID = "user_id";
 	public static final String ACCOUNT_NAME = "name";
 	public static final String ACCOUNT_BALANCE = "balance";
@@ -40,8 +40,9 @@ public class AccountDAOImpl implements AccountDAO {
 	private static final String SQL_FIND_ACCOUNT_BY_ID = "SELECT * FROM accounts WHERE account_id=?";
 	private static final String SQL_UPDATE_ACCOUNT = "UPDATE accounts SET user_id = ?, name = ?, balance = ?,"
 			+ " account_status_id = ? WHERE account_id=?";
-	private static final String SQL_INSERT_ACCOUNT = "INSERT INTO accounts VALUES (DEFAULT,?, ?, DEFAULT, DEFAULT,DEFAULT)";
+	private static final String SQL_INSERT_ACCOUNT = "INSERT INTO accounts VALUES (DEFAULT,?, ?, DEFAULT, DEFAULT,?)";
 	private static final String SQL_FIND_ACCOUNTS_BY_USER_ID = "SELECT * FROM accounts WHERE user_id=?";
+	private static final String SQL_FIND_ACCOUNTS_BY_CARD_ID ="SELECT * FROM accounts WHERE card_id=?";
 
 	@Override
 	public Account getEntityById(int id) throws DBException, ConnectionException {
@@ -101,6 +102,8 @@ public class AccountDAOImpl implements AccountDAO {
 			pstmt = con.prepareStatement(SQL_INSERT_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, entity.getUserId());
 			pstmt.setString(2, entity.getName());
+			pstmt.setInt(3, entity.getCardid());
+
 			if (pstmt.executeUpdate() > 0) {
 				rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
@@ -174,6 +177,31 @@ public class AccountDAOImpl implements AccountDAO {
 		account.setName(rs.getString(ACCOUNT_NAME));
 		account.setBalance(rs.getBigDecimal(ACCOUNT_BALANCE));
 		account.setAccountStatusId(rs.getInt(ACCOUNT_STATUS));
+		account.setCardid(rs.getInt(ACCOUNT_CARD_ID));
+
 		return account;
+	}
+
+	@Override
+	public List<Account> getAccountsByCardID(int cardId) throws DBException, ConnectionException  {
+		List<Account> result = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ProxyConnection con = null;
+		try {
+			con = factory.getProxyConnection();
+			pstmt = con.prepareStatement(SQL_FIND_ACCOUNTS_BY_CARD_ID);
+			pstmt.setInt(1, cardId);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				result.add(extractAccount(rs));
+			}
+		} catch (SQLException ex) {
+			LOG.error(Messages.ERR_CANNOT_OBTAIN_CREDIT_CARD_BY_ID, ex);
+			throw new DBException(Messages.ERR_CANNOT_OBTAIN_CREDIT_CARD_BY_ID, ex);
+		} finally {
+			factory.close(con, pstmt, rs);
+		}
+		return result;
 	}
 }

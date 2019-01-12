@@ -67,6 +67,11 @@ public class NewPaymentCommand extends Command {
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_REDIRECT_TRANSACTION_COMPLETED);
 	}
 
+	
+	public double calculatePercentage(double percentage, double total) {
+        return total / 100 * percentage;
+    }
+	
 	private void validateAccounts(int accountFrom, int accountTo) throws ApplicationException {
 		if (accountFrom == accountTo) {
 			throw new ApplicationException("accountFrom == accountTo");

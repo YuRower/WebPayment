@@ -14,10 +14,16 @@ public class Account extends AbstractEntity {
 	private String name;
 	private BigDecimal balance;
 	private int accountStatusId;
+	private int cardid;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "card_fee_id")
 	private Card cards;
 
+	
+	public Account () {
+		
+	}
 	/**
 	 * @return the card
 	 */
@@ -68,5 +74,17 @@ public class Account extends AbstractEntity {
 	public String toString() {
 		return "Account [id=" + getId() + ", userId=" + userId + ", name=" + name + ", balance=" + balance
 				+ ", accountStatusId=" + accountStatusId + "]";
+	}
+	/**
+	 * @return the cardid
+	 */
+	public int getCardid() {
+		return cardid;
+	}
+	/**
+	 * @param cardid the cardid to set
+	 */
+	public void setCardid(int cardid) {
+		this.cardid = cardid;
 	}
 }

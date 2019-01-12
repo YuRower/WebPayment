@@ -39,10 +39,10 @@ public class ListUserCardsCommand extends Command {
 
 		LOG.trace("Get all user cards");
 		List<Card> cards = userLogic.getAllUserCards();
-		session.setAttribute("cadrs", cards);
+		session.setAttribute("cards", cards);
 
 		LOG.debug("Command finished");
-		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.COMMAND_LIST_CARDS);
+		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.COMMAND_LIST_ACCOUNTS);
 	}
 
 }

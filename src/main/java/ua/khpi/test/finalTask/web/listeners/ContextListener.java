@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import ua.khpi.test.finalTask.dao.AbstractDAOFactory;
 import ua.khpi.test.finalTask.dao.AbstractDAOFactory.FactoryTypes;
-import ua.khpi.test.finalTask.exception.DBException;
 
 
 
