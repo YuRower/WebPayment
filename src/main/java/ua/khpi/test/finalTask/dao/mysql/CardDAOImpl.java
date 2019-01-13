@@ -1,8 +1,8 @@
 package ua.khpi.test.finalTask.dao.mysql;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -10,7 +10,6 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.annotations.NamedQuery;
 import org.jboss.logging.Logger;
 import ua.khpi.test.finalTask.dao.CardDAO;
 import ua.khpi.test.finalTask.entity.Card;
@@ -30,15 +29,20 @@ public class CardDAOImpl implements CardDAO {
 
 	@Override
 	public Card getEntityById(int id) throws DBException, ConnectionException {
-		return null;
-		/*
-		 * EntityManager em = DBUtil.getEmFactory().createEntityManager(); String
-		 * qString = "SELECT u FROM cards u " + "WHERE u.card_id = :card_id";
-		 * TypedQuery<Card> q = em.createQuery(qString, Card.class);
-		 * q.setParameter("card_id", id); try { Card card = q.getSingleResult(); return
-		 * card; } catch (NoResultException e) { LOGGER.error("Cannot get card by id ",
-		 * e); return null; } finally { em.close(); }
-		 */
+
+		sessionFactory = DBUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+		String qString = "SELECT u FROM Card u " + "WHERE id = :id";
+		TypedQuery<Card> q = session.createQuery(qString, Card.class);
+		q.setParameter("id", id);
+		try {
+			Card card = q.getSingleResult();
+			return card;
+		} catch (NoResultException e) {
+			LOGGER.error("Cannot get card by id ", e);
+			return null;
+		}
+
 	}
 
 	@Override

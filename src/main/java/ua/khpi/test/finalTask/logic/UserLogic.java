@@ -27,6 +27,16 @@ public class UserLogic extends ApplicationLogic {
 		}
 
 	}
+	
+	public Card getCardbyId(int cardId) throws DBException, ConnectionException {
+		try {
+			return cardDao.getEntityById(cardId);
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+	}
 
 	public void update(Account accountToLock) throws DBException {
 		try {

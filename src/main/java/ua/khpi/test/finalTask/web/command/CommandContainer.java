@@ -85,7 +85,7 @@ public class CommandContainer {
 		commands.put("sortTransactions", new SortPaymentsCommand());
 		commands.put("changeAccountsOrder", new ChangeAccountsOrder());
 		commands.put("changePaymentsOrder", new ChangePaymentsOrder());
-		commands.put("replanishAccount", new ReplenishAccountCommand());
+		commands.put("replanishAccount", new ReplenishAccountCommand(new UserLogic()));
 		commands.put("listAccounts", new ListUserAccountsCommand(new UserLogic()));
 		commands.put("listCart", new RedirectListCartCommand());
 		commands.put("redirectReplenishAccount", new RedirectReplenishAccountCommand());

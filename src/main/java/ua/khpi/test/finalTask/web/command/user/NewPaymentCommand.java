@@ -12,9 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.khpi.test.finalTask.dao.AbstractDAOFactory;
-import ua.khpi.test.finalTask.dao.AbstractDAOFactory.FactoryTypes;
-import ua.khpi.test.finalTask.dao.AccountDAO;
 import ua.khpi.test.finalTask.entity.Account;
 import ua.khpi.test.finalTask.entity.Payment;
 import ua.khpi.test.finalTask.entity.enums.PaymentType;
@@ -25,7 +22,6 @@ import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
 
-
 public class NewPaymentCommand extends Command {
 
 	private static final Logger LOG = LogManager.getLogger(NewPaymentCommand.class);
@@ -34,6 +30,7 @@ public class NewPaymentCommand extends Command {
 	public NewPaymentCommand(UserLogic userLogic) {
 		this.userLogic = userLogic;
 	}
+
 	@Override
 	public RequestProcessorInfo execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, ApplicationException {
@@ -53,6 +50,7 @@ public class NewPaymentCommand extends Command {
 
 		validateAmount(amountStr);
 
+		
 		Payment payment = new Payment();
 		payment.setMoneyAmount(new BigDecimal(amountStr));
 		payment.setAccountIdFrom(accountFrom);
@@ -67,10 +65,6 @@ public class NewPaymentCommand extends Command {
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_REDIRECT_TRANSACTION_COMPLETED);
 	}
 
-	
-	public double calculatePercentage(double percentage, double total) {
-        return total / 100 * percentage;
-    }
 	
 	private void validateAccounts(int accountFrom, int accountTo) throws ApplicationException {
 		if (accountFrom == accountTo) {

@@ -12,19 +12,27 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ua.khpi.test.finalTask.entity.Card;
 import ua.khpi.test.finalTask.entity.Payment;
+import ua.khpi.test.finalTask.entity.enums.Fee;
 import ua.khpi.test.finalTask.entity.enums.PaymentType;
 import ua.khpi.test.finalTask.exception.ApplicationException;
+import ua.khpi.test.finalTask.exception.ConnectionException;
+import ua.khpi.test.finalTask.exception.DBException;
+import ua.khpi.test.finalTask.logic.UserLogic;
 import ua.khpi.test.finalTask.web.Path;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
 
-
-
 public class ReplenishAccountCommand extends Command {
-	
+
 	private static final Logger LOG = LogManager.getLogger(ReplenishAccountCommand.class);
+	UserLogic userLogic;
+
+	public ReplenishAccountCommand(UserLogic userLogic) {
+		this.userLogic = userLogic;
+	}
 
 	@Override
 	public RequestProcessorInfo execute(HttpServletRequest request, HttpServletResponse response)
@@ -32,24 +40,31 @@ public class ReplenishAccountCommand extends Command {
 		LOG.debug("Command starts");
 
 		HttpSession session = request.getSession();
-		
+
 		String amountStr = request.getParameter("amount");
-		LOG.trace("Replenish amount --> "+amountStr);
+		LOG.trace("Replenish amount --> " + amountStr);
 		String accountId = request.getParameter("accountId");
-		LOG.trace("Account id --> "+accountId);
-		
+		LOG.trace("Account id --> " + accountId);
+		int accID = Integer.parseInt(accountId);
 		validateAmount(amountStr);
-		
+		String card_id = String.valueOf(session.getAttribute("current_card"));
+
+		Card card = defineCard(Integer.parseInt(card_id));
+		Fee fee = Fee.getFee(card);
+		LOG.trace("card fee --> " + fee);
+		int percentage = defineCardFee(fee);
+		double amount = calculatePercentage(percentage, Double.parseDouble(amountStr));
+		LOG.trace("amount of payment with card fee --> " + amount);
 		Payment payment = new Payment();
-		payment.setMoneyAmount(new BigDecimal(amountStr));
-		payment.setAccountIdTo(Integer.parseInt(accountId));
+		payment.setMoneyAmount(new BigDecimal(amountStr+amount));
+		payment.setAccountIdTo(accID);
 		payment.setPaymentTypeId(PaymentType.REPLENISH.ordinal());
-		LOG.trace("Created payment --> "+payment);
-		
+		LOG.trace("Created payment --> " + payment);
+
 		addPaymentToPreparedPayments(payment, session);
-		
+
 		LOG.debug("Command finished");
-		
+
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_REDIRECT_TRANSACTION_COMPLETED);
 	}
 
@@ -60,6 +75,29 @@ public class ReplenishAccountCommand extends Command {
 		preparedPayments.add(payment);
 
 		session.setAttribute("prepPayments", preparedPayments);
+	}
+
+	private Card defineCard(int accountFrom) throws DBException, ConnectionException {
+		Card card = userLogic.getCardbyId(accountFrom);
+		return card;
+
+	}
+
+	private int defineCardFee(Fee cardFee) throws ApplicationException {
+		switch (cardFee) {
+		case GOLD:
+			return Fee.GOLD.getPercentage();
+		case SILVER:
+			return Fee.SILVER.getPercentage();
+		case DEFAULT:
+			return Fee.DEFAULT.getPercentage();
+		default:
+			throw new ApplicationException("Unresolved card fee");
+		}
+	}
+
+	public double calculatePercentage(double percentage, double total) {
+		return total / 100 * percentage;
 	}
 
 	private void validateAmount(String amountStr) throws ApplicationException {
