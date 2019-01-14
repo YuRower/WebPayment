@@ -14,19 +14,7 @@
 		<%-- HEADER --%>
 
 		<tr>
-			<%--<td class="content center">
-				<h3>
-					<fmt:message key="newacc.header" />
-				</h3>
-				<form action="controller" method="POST">
-					<input type="hidden" name="command" value="createNewCard" /> <input
-						name="name" required /><br /> <input type="submit"
-						value="<fmt:message key="newacc.submit"/>">
-				</form>
-				<p>
-					<fmt:message key="newacc.warning" />
-				</p>
- --%>
+		
 			<td class="content center">
 				<h3>
 					<fmt:message key="newcard.header" />
@@ -34,10 +22,8 @@
 				<button class="collapsible" style="  background-color: gold ">Get info about Golden
 					Card</button>
 				<div class="content_text">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-						sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						nisi ut aliquip ex ea commodo consequat.</p>
+					<p>The gold card adds to the account 2 percent of the total amount of the deposit.
+</p>
 				</div>
 				<form action="controller" method="POST">
 					<input type="hidden" name="command" value="createNewCard" /> <input type="hidden"
@@ -51,10 +37,8 @@
 			<td class="content center">
 				<button class="collapsible" style="  background-color: silver ">Get info about Silver Card</button>
 				<div class="content_text">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-						sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						nisi ut aliquip ex ea commodo consequat.</p>
+					<p>The silver card adds to the account 1 percent of the total amount of the deposit.
+</p>
 				</div>
 				<form action="controller" method="POST">
 					<input type="hidden" name="command" value="createNewCard" /> <input type="hidden"
@@ -68,10 +52,7 @@
 			<td class="content center">
 				<button class="collapsible">Get info about Default Card</button>
 				<div class="content_text">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-						sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-						nisi ut aliquip ex ea commodo consequat.</p>
+					<p>The default card adds to the account -1 percent of the total amount of the deposit.</p>
 				</div>
 				<form action="controller" method="POST">
 					<input type="hidden" name="command" value="createNewCard" /> <input type="hidden"

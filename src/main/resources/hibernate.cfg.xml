@@ -3,8 +3,8 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect </property>
-		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/web_payment?serverTimezone=UTC</property>
+		<property name="hibernate.connection.driver_class">net.sf.log4jdbc.DriverSpy</property>
+		<property name="hibernate.connection.url">jdbc:log4jdbc:mysql://localhost:3306/web_payment?serverTimezone=UTC</property>
 		<property name="hibernate.connection.username">root </property>
 		<property name="hibernate.connection.password">root </property>
 		<property name="connection.pool_size">20 </property>

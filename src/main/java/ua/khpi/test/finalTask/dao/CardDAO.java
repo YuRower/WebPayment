@@ -8,4 +8,6 @@ public interface CardDAO extends CrudDAO<Card> {
 
 	List<Card> getAllUserCards();
 
+	List<Card> getAllCardsByUserId();
+
 }

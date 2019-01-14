@@ -1,6 +1,5 @@
 package ua.khpi.test.finalTask.entity;
 
-import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,12 +10,9 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractEntity  {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;

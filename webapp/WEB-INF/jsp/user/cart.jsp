@@ -51,8 +51,13 @@
 				</c:if>
 				
 				<p>
-							<a href="controller?command=redirectNewCard"><fmt:message key="acc.enum.click"/></a> <fmt:message key="acc.enum.newcard"/>
+					<a href="controller?command=redirectNewCard"><fmt:message key="acc.enum.click"/></a> <fmt:message key="acc.enum.newcard"/>
 				</p>
+					<form onsubmit="return confirm('Do you really want to delete cart?');" action="controller" method = "POST">
+							<input type="hidden" name="command" value="deleteCart" />
+							<fmt:message key="cart.delete"/> <input type="text" name ="cardID" />
+							 <input type="submit">
+						</form>
 				<c:if test="${empty prepPayments}">
 					<h3><fmt:message key="cart.null"/></h3>
 				</c:if>

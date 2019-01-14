@@ -48,7 +48,7 @@
 			redirectReplenishmentCompleted redirectAccountSettings 
 			redirectNewPayment newPayment clearCart executeCartPayments
 			listTransactions createNewAccount redirectNewAccount 
-			closeAccount unlockAccount changeAccountName getTransactionReport redirectNewCard createNewCard 
+			closeAccount unlockAccount changeAccountName getTransactionReport redirectNewCard createNewCard deleteCart
 			</param-value>
 		</init-param>
 		<init-param>

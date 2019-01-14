@@ -111,7 +111,7 @@ public class MysqlDAOFactory extends AbstractDAOFactory {
 
 	@Override
 	public CardDAO getCardDAO() {
-		return new CardDAOImpl(instance);
+		return new CardDAOImpl();
 	}
 
 }

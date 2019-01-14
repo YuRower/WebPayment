@@ -127,8 +127,8 @@ public class UserLogic extends ApplicationLogic {
 		}
 	}
 
-	public List<Card> getAllUserCards() {
-		List<Card> cards = cardDao.getAllUserCards();
+	public List<Card> getAllCardsByUserId() {
+		List<Card> cards = cardDao.getAllCardsByUserId();
 		return cards ;
 	}
 

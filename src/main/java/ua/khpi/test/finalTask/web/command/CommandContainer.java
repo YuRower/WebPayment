@@ -34,6 +34,7 @@ import ua.khpi.test.finalTask.web.command.user.ClearCartCommand;
 import ua.khpi.test.finalTask.web.command.user.CloseAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.CreateNewAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.CreateNewCardCommand;
+import ua.khpi.test.finalTask.web.command.user.DeleteCartCommand;
 import ua.khpi.test.finalTask.web.command.user.ExecuteCartPaymentsCommand;
 import ua.khpi.test.finalTask.web.command.user.GetAccountsByCardCommnd;
 import ua.khpi.test.finalTask.web.command.user.InitializeUserSessionCommand;
@@ -81,6 +82,8 @@ public class CommandContainer {
 		commands.put("listCards", new ListUserCardsCommand(new UserLogic()));
 		commands.put("numCard", new GetAccountsByCardCommnd(new UserLogic()));
 		commands.put("lockAccount", new LockAccountCommand(new UserLogic()));
+		commands.put("deleteCare", new DeleteCartCommand(new UserLogic()));
+
 		commands.put("sortAccounts", new SortAccountsCommand());
 		commands.put("sortTransactions", new SortPaymentsCommand());
 		commands.put("changeAccountsOrder", new ChangeAccountsOrder());

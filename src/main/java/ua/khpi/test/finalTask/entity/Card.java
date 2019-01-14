@@ -1,5 +1,6 @@
 package ua.khpi.test.finalTask.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,8 +16,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="cards")
-public class Card extends AbstractEntity {
+public class Card extends AbstractEntity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public String toString() {
 		return "Card [cardNumber=" + cardNumber + ", expDate=" + expDate + ", cardName=" + cardName + ", cardFeeid="
