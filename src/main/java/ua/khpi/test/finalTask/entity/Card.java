@@ -10,8 +10,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -42,7 +45,6 @@ public class Card extends AbstractEntity implements Serializable {
 	private String cardName;
 	@Column (name = "card_fee_id")
 	private int cardFeeid;
-
 	/**
 	 * @return the account
 	 */
@@ -56,16 +58,23 @@ public class Card extends AbstractEntity implements Serializable {
 	public void setAccount(ArrayList<Account> account) {
 		this.account = account;
 	}
-
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable=false)
+	private User user ;
+	
+	
 	@OneToMany(mappedBy = "cards", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Account> account;
+	private List<Account> account= new ArrayList<>();;
 
-	public Card(BigDecimal cardNumber, LocalDate expDate, String cardName, int cardFeeid) {
+	public Card(BigDecimal cardNumber, LocalDate expDate, String cardName, int cardFeeid,int userId) {
 		this.cardNumber = cardNumber;
 		this.expDate = expDate;
 		this.cardName = cardName;
 		this.cardFeeid = cardFeeid;
-		this.account = new ArrayList<>();
+		user = new User();
+		this.user.setId(userId);
 	}
 
 	public BigDecimal getCardNumber() {
@@ -99,5 +108,28 @@ public class Card extends AbstractEntity implements Serializable {
 	public void setCardFeeid(int cardFeeid) {
 		this.cardFeeid = cardFeeid;
 	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	/**
+	 * @param account the account to set
+	 */
+	public void setAccount(List<Account> account) {
+		this.account = account;
+	}
+
+	
 
 }

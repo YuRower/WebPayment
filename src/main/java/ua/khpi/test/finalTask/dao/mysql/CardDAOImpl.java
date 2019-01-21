@@ -3,16 +3,12 @@ package ua.khpi.test.finalTask.dao.mysql;
 import java.util.List;
 
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -26,7 +22,9 @@ import ua.khpi.test.finalTask.exception.DBException;
 
 public class CardDAOImpl implements CardDAO {
 	private static Logger LOGGER = Logger.getLogger(CardDAOImpl.class);
+
 	private static final SessionFactory sessionFactory;
+
 	static {
 		try {
 			sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -69,7 +67,7 @@ public class CardDAOImpl implements CardDAO {
 		} catch (Exception sqlException) {
 			flag = false;
 			if (null != session.getTransaction()) {
-				LOGGER.info("\n.......Transaction Is Being Rolled Back.......\n");
+				LOGGER.info("\n.......Transaction Is Being Rolled Back.......\n",sqlException);
 				session.getTransaction().rollback();
 			}
 			sqlException.printStackTrace();
@@ -93,7 +91,7 @@ public class CardDAOImpl implements CardDAO {
 		} catch (Exception sqlException) {
 			flag = false;
 			if (null != session.getTransaction()) {
-				LOGGER.info("\n.......Transaction Is Being Rolled Back.......\n");
+				LOGGER.info("\n.......Transaction Is Being Rolled Back.......\n",sqlException);
 				session.getTransaction().rollback();
 			}
 			sqlException.printStackTrace();
@@ -117,7 +115,7 @@ public class CardDAOImpl implements CardDAO {
 		} catch (Exception sqlException) {
 			flag = false;
 			if (null != session.getTransaction()) {
-				LOGGER.info("\n.......Transaction Is Being Rolled Back.......\n");
+				LOGGER.info("\n.......Transaction Is Being Rolled Back.......\n",sqlException);
 				session.getTransaction().rollback();
 			}
 			sqlException.printStackTrace();
@@ -150,29 +148,26 @@ public class CardDAOImpl implements CardDAO {
 	}
 
 	@Override
-	public List<Card> getAllCardsByUserId() {
+	public List<Account> getAccountsByCardId(int cardId) throws ConnectionException, DBException {
 		Session session = sessionFactory.openSession();
+		Query q = session.createQuery("from Account  where cards_id = :id");
+		q.setParameter("id", cardId);
+		List<Account> list = q.list();
 
-		try {
-			CriteriaBuilder cb = session.getCriteriaBuilder();
-			CriteriaQuery<Card> searchQuery = cb.createQuery(Card.class);
-			Root<Card> aRoot = searchQuery.from(Card.class);
-			Join<Card, Account> bJoin= aRoot.join("account", JoinType.LEFT);
-			searchQuery.where(cb.equal(bJoin.get("userId"), 16));
-			//searchQuery.select(aRoot).distinct(true);;
-		//	searchQuery.select(aRoot).where(cb.equal(bJoin.get("userId"), 16));
-			//bJoin.on(cb.equal(bJoin.get("userId"), 16));
-			TypedQuery<Card> typedQuery = session.createQuery(searchQuery);
-			List<Card> resultList =typedQuery.getResultList(); 
-			
-			
-			
-			return resultList ;
-		} finally {
-			if (session != null) {
-				session.close();
-			}
-		}
+		/*
+		 * List<Account> list = session.createCriteria(Account.class).createCriteria("")
+		 * .add(Restrictions.eq("id", cardId)).list();
+		 */
+		return list;
 	}
 
+	@Override
+	public List<Card> getAllCardsByUserId(int id) {
+		Session session = sessionFactory.openSession();
+		Query q = session.createQuery("from Card  where user_id = :id");
+		q.setParameter("id", id);
+		List<Card> list = q.list();
+		return list;
+
+	}
 }

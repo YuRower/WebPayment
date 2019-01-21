@@ -56,38 +56,39 @@ public class RegistrationCommand extends Command {
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		Middleware middleware = new SurnameValidator(surname);
-		
-		middleware.linkWith(new NameValidator(name))
-				.linkWith(new PasswordValidator(password)).linkWith(new EmailValidator(email));
+
+		middleware.linkWith(new NameValidator(name)).linkWith(new PasswordValidator(password))
+				.linkWith(new EmailValidator(email));
 		handler.setMiddleware(middleware);
-		
+
 		boolean success;
 		do {
 			success = handler.validate();
 		} while (success);
-		
+
 		password = hashPassword(password);
 
-
 		// random string that will be used for verification purposes
+
 		String emailVerification = UUID.randomUUID().toString();
-		sendVerificationMail(email, emailVerification, request);
-
-		composeAndSaveUser(name, surname, email, emailVerification, password);
-
+		boolean isUserAdded = composeAndSaveUser(name, surname, email, emailVerification, password);
+		if (isUserAdded) {
+			sendVerificationMail(email, emailVerification, request);
+		}
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_REDIRECT_REGISTRATION_COMPLETED);
 
 	}
 
-	private void composeAndSaveUser(String name, String surname, String email, String emailVerification,
+	private boolean composeAndSaveUser(String name, String surname, String email, String emailVerification,
 			String password) throws ApplicationException {
 
 		User user = new User(name, surname, email, emailVerification, password);
 		LOG.trace("Created user --> " + user);
 
-		commonLogic.newUserWithDefaultValues(user);
+		boolean result = commonLogic.newUserWithDefaultValues(user);
 		LOG.trace("Saved user --> " + user);
+		return result;
 
 	}
 

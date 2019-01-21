@@ -31,7 +31,7 @@ public class UserDAOImpl implements UserDAO {
 		this.factory = factory;
 	}
 
-	public static final String USER_ID = "user_id";
+	public static final String USER_ID = "id";
 	public static final String USER_NAME = "name";
 	public static final String USER_SURNAME = "surname";
 	public static final String USER_EMAIL = "email";
@@ -40,17 +40,17 @@ public class UserDAOImpl implements UserDAO {
 	public static final String USER_ROLE_ID = "user_role_id";
 	public static final String USER_STATUS_ID = "user_status_id";
 	
-	private static final String SQL_REMOVE_ADMIN= "DELETE FROM users WHERE user_id=?";
+	private static final String SQL_REMOVE_ADMIN= "DELETE FROM users WHERE id=?";
 	private static final String SQL_FIND_ADMINS= "SELECT * FROM users WHERE user_role_id=1";
 	private static final String SQL_ALL_FIND_USERS= "SELECT * FROM users";
 
-	private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM users WHERE user_id=?";
+	private static final String SQL_FIND_USER_BY_ID = "SELECT * FROM users WHERE id=?";
 	private static final String SQL_FIND_USER_BY_EMAIL = "SELECT * FROM users WHERE email=?";
 	private static final String SQL_USER_WITH_EMAIL_EXISTS = "SELECT EXISTS(SELECT * FROM Users WHERE email = ?)";
 	private static final String SQL_INSERT_USER_FULL_INFO = "INSERT INTO users VALUES (DEFAULT,?, ?, ?, ?, ?, ?, ?)";
 	private static final String SQL_INSERT_USER_SHORT_VARIANT = "INSERT INTO users VALUES (DEFAULT, ?, ?, ?, ?, ?, DEFAULT, DEFAULT)";
 	private static final String SQL_UPDATE_USER = "UPDATE users SET name = ?, surname = ?, email = ?, email_verification = ?, "
-			+ "password=?, user_role_id = ?, user_status_id = ? WHERE user_id=?";
+			+ "password=?, user_role_id = ?, user_status_id = ? WHERE id=?";
 
 	@Override
 	public User getEntityById(int id) throws DBException, ConnectionException {
@@ -88,7 +88,7 @@ public class UserDAOImpl implements UserDAO {
 			pstmt.setString(3, entity.getEmail());
 			pstmt.setString(4, entity.getEmailVerification());
 			pstmt.setString(5, entity.getPassword());
-			pstmt.setInt(6, entity.getUserTypeId());
+			pstmt.setInt(6, entity.getUserRoleId());
 			pstmt.setInt(7, entity.getUserStatusId());
 			pstmt.setInt(8, entity.getId());
 			result = pstmt.executeUpdate() > 0;
@@ -111,12 +111,12 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			con = factory.getProxyConnection();
 			pstmt = con.prepareStatement(SQL_INSERT_USER_FULL_INFO, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, entity.getName());
-			pstmt.setString(2, entity.getSurname());
-			pstmt.setString(3, entity.getEmail());
-			pstmt.setString(4, entity.getEmailVerification());
-			pstmt.setString(5, entity.getPassword());
-			pstmt.setInt(6, entity.getUserTypeId());
+			pstmt.setString(1, entity.getEmail());
+			pstmt.setString(2, entity.getEmailVerification());
+			pstmt.setString(3, entity.getName());
+			pstmt.setString(4, entity.getPassword());
+			pstmt.setString(5, entity.getSurname());
+			pstmt.setInt(6, entity.getUserRoleId());
 			pstmt.setInt(7, entity.getUserStatusId());
 			if (pstmt.executeUpdate() > 0) {
 				rs = pstmt.getGeneratedKeys();
@@ -143,11 +143,12 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			con = factory.getProxyConnection();
 			pstmt = con.prepareStatement(SQL_INSERT_USER_SHORT_VARIANT, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, user.getName());
-			pstmt.setString(2, user.getSurname());
-			pstmt.setString(3, user.getEmail());
-			pstmt.setString(4, user.getEmailVerification());
-			pstmt.setString(5, user.getPassword());
+			pstmt.setString(1, user.getEmail());
+			pstmt.setString(2, user.getEmailVerification());
+			pstmt.setString(3, user.getName());
+			pstmt.setString(4, user.getPassword());
+			pstmt.setString(5, user.getSurname());
+
 			if (pstmt.executeUpdate() > 0) {
 				rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
@@ -286,7 +287,7 @@ public class UserDAOImpl implements UserDAO {
 		user.setEmail(rs.getString(USER_EMAIL));
 		user.setEmailVerification(rs.getString(USER_EMAIL_VERIFICATION));
 		user.setPassword(rs.getString(USER_PASSWORD));
-		user.setUserTypeId(rs.getInt(USER_ROLE_ID));
+		user.setUserRoleId(rs.getInt(USER_ROLE_ID));
 		user.setUserStatusId(rs.getInt(USER_STATUS_ID));
 		return user;
 	}

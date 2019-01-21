@@ -49,14 +49,7 @@ public class UserLogic extends ApplicationLogic {
 		}
 	}
 
-	public List<Account> getAccountsByUserId(int id) throws DBException, ConnectionException {
-		try {
-			return accountDao.getAccountsByUserId(id);
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
+
 
 	public void insertReplenish(BigDecimal moneyAmount, int accountIdTo) throws DBException {
 		try {
@@ -116,28 +109,29 @@ public class UserLogic extends ApplicationLogic {
 
 	public void addEntity(Account newAccount) throws DBException {
 		try {
-			TransactionManager.beginTransaction();
+		//	TransactionManager.beginTransaction();
 			accountDao.addEntity(newAccount);
-			TransactionManager.commitTransaction();
+		//	TransactionManager.commitTransaction();
 
 		} catch (ConnectionException e) {
 			e.printStackTrace();
-			TransactionManager.rollbackTransaction();
+			//TransactionManager.rollbackTransaction();
 
 		}
 	}
 
-	public List<Card> getAllCardsByUserId() {
-		List<Card> cards = cardDao.getAllCardsByUserId();
+	public List<Account> getAccountsByCardId(int cardId) throws ConnectionException, DBException {
+		List<Account> accounts = cardDao.getAccountsByCardId(cardId);
+		return accounts ;
+	}
+
+	public List<Card> getAllCardsByUserId(int id) {
+		List<Card> cards = cardDao.getAllCardsByUserId(id);
 		return cards ;
+
 	}
 
-	public List<Account> getAccountsCardId( int id) throws DBException, ConnectionException {
-		try {
-			return accountDao.getAccountsByCardID(id);
-		} catch (ConnectionException e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
+
+
+	
 }

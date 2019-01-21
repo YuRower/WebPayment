@@ -3,6 +3,7 @@ package ua.khpi.test.finalTask.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -10,49 +11,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="account")
+@Table(name = "accounts")
 public class Account extends AbstractEntity implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private int userId;
+	@Column(name = "name")
 	private String name;
+	@Column(name = "balance")
 	private BigDecimal balance;
+	@Column(name = "account_status_id")
 	private int accountStatusId;
-	private int cardid;
-
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "card_fee_id")
+    @JoinColumn(name="cards_id", nullable=false)
 	private Card cards;
 
+	public Account(String accName, BigDecimal balance ,int accountStatusId, int cardsId) {
+		this.name = accName;
+		this.balance=balance;
+		cards = new Card();
+		this.accountStatusId=accountStatusId;
+		this.cards.setId(cardsId);
+	}
 	
-	public Account () {
-		
-	}
-	/**
-	 * @return the card
-	 */
-	public Card getCard() {
-		return cards;
-	}
-
-	/**
-	 * @param card the card to set
-	 */
-	public void setCard(Card card) {
-		this.cards = card;
-	}
-
-	public int getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
+public Account() {}
+	
+	
 	public String getName() {
 		return this.name;
 	}
@@ -77,21 +60,36 @@ public class Account extends AbstractEntity implements Serializable {
 		this.accountStatusId = accountStatusId;
 	}
 
+	
+
+
+	/**
+	 * @return the cards
+	 */
+	public Card getCards() {
+		return cards;
+	}
+
+
+
+	
+
+
+	/**
+	 * @param cards the cards to set
+	 */
+	public void setCards(Card cards) {
+		this.cards = cards;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Account [id=" + getId() + ", userId=" + userId + ", name=" + name + ", balance=" + balance
-				+ ", accountStatusId=" + accountStatusId + "]";
+		return "Account [name=" + name + ", balance=" + balance + ", accountStatusId=" + accountStatusId + ", cards="
+				 + "]";
 	}
-	/**
-	 * @return the cardid
-	 */
-	public int getCardid() {
-		return cardid;
-	}
-	/**
-	 * @param cardid the cardid to set
-	 */
-	public void setCardid(int cardid) {
-		this.cardid = cardid;
-	}
+
+	
 }

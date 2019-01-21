@@ -40,6 +40,9 @@ public class CreateNewCardCommand extends Command {
 	public RequestProcessorInfo execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, ApplicationException {
 		LOG.debug("Command starts");
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("user");
+		LOG.debug("user" + user);
 
 		String cardType = request.getParameter("card_type");
 		LOG.debug("cardType" +cardType);
@@ -58,7 +61,7 @@ public class CreateNewCardCommand extends Command {
 
 		}
 		BigDecimal cardNumber = generate();
-		Card card = new Card(cardNumber, expDate, cardType, fee);
+		Card card = new Card(cardNumber, expDate, cardType, fee,user.getId());
 		userLogic.insertCard(card);
 		LOG.debug("Command finished");
 		LOG.debug("cardType" +cardType);

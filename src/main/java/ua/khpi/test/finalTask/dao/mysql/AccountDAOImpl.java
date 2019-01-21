@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import com.mysql.jdbc.Statement;
 
@@ -28,21 +31,28 @@ public class AccountDAOImpl implements AccountDAO {
 		this.factory = factory;
 	}
 
+	private static final SessionFactory sessionFactory;
+
+	static {
+		try {
+			sessionFactory = new Configuration().configure().buildSessionFactory();
+		} catch (Throwable e) {
+			LOG.error("Initial SessionFactory creation failed." + e);
+			throw new ExceptionInInitializerError(e);
+		}
+	}
+
 	public static final String ACCOUNT_ID = "id";
-	public static final String ACCOUNT_USER_ID = "user_id";
 	public static final String ACCOUNT_NAME = "name";
 	public static final String ACCOUNT_BALANCE = "balance";
 	public static final String ACCOUNT_STATUS = "account_status_id";
-	public static final String ACCOUNT_CARD_ID = "card_id";
+	public static final String ACCOUNT_CARD_ID = "cards_id";
 
-	
 	private static final String SQL_FIND_ALL_ACCOUNTS = "SELECT * FROM accounts";
 	private static final String SQL_FIND_ACCOUNT_BY_ID = "SELECT * FROM accounts WHERE id=?";
-	private static final String SQL_UPDATE_ACCOUNT = "UPDATE accounts SET user_id = ?, name = ?, balance = ?,"
+	private static final String SQL_UPDATE_ACCOUNT = "UPDATE accounts SET  name = ?, balance = ?,"
 			+ " account_status_id = ? WHERE id=?";
-	private static final String SQL_INSERT_ACCOUNT = "INSERT INTO accounts VALUES (DEFAULT,?, ?, DEFAULT, DEFAULT,?)";
-	private static final String SQL_FIND_ACCOUNTS_BY_USER_ID = "SELECT * FROM accounts WHERE user_id=?";
-	private static final String SQL_FIND_ACCOUNTS_BY_CARD_ID ="SELECT * FROM accounts WHERE card_id=?";
+	private static final String SQL_INSERT_ACCOUNT = "INSERT INTO accounts VALUES (DEFAULT,?, ?, ?,?)";
 
 	@Override
 	public Account getEntityById(int id) throws DBException, ConnectionException {
@@ -75,11 +85,10 @@ public class AccountDAOImpl implements AccountDAO {
 		try {
 			con = factory.getProxyConnection();
 			pstmt = con.prepareStatement(SQL_UPDATE_ACCOUNT);
-			pstmt.setInt(1, entity.getUserId());
-			pstmt.setString(2, entity.getName());
-			pstmt.setBigDecimal(3, entity.getBalance());
-			pstmt.setInt(4, entity.getAccountStatusId());
-			pstmt.setInt(5, entity.getId());
+			pstmt.setString(1, entity.getName());
+			pstmt.setBigDecimal(2, entity.getBalance());
+			pstmt.setInt(3, entity.getAccountStatusId());
+			pstmt.setInt(4, entity.getId());
 			result = pstmt.executeUpdate() > 0;
 		} catch (SQLException ex) {
 			LOG.error(Messages.ERR_CANNOT_UPDATE_ACCOUNT, ex);
@@ -100,9 +109,10 @@ public class AccountDAOImpl implements AccountDAO {
 		try {
 			con = factory.getProxyConnection();
 			pstmt = con.prepareStatement(SQL_INSERT_ACCOUNT, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setInt(1, entity.getUserId());
-			pstmt.setString(2, entity.getName());
-			pstmt.setInt(3, entity.getCardid());
+			pstmt.setInt(1, entity.getAccountStatusId());
+			pstmt.setInt(2, entity.getBalance().intValue());
+			pstmt.setString(3, entity.getName());
+			pstmt.setInt(4, entity.getCards().getId());
 
 			if (pstmt.executeUpdate() > 0) {
 				rs = pstmt.getGeneratedKeys();
@@ -114,29 +124,6 @@ public class AccountDAOImpl implements AccountDAO {
 		} catch (SQLException ex) {
 			LOG.error(Messages.ERR_CANNOT_INSERT_ACCOUNT, ex);
 			throw new DBException(Messages.ERR_CANNOT_INSERT_ACCOUNT, ex);
-		} finally {
-			factory.close(con, pstmt, rs);
-		}
-		return result;
-	}
-
-	@Override
-	public List<Account> getAccountsByUserId(int userId) throws DBException, ConnectionException {
-		List<Account> result = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		ProxyConnection con = null;
-		try {
-			con = factory.getProxyConnection();
-			pstmt = con.prepareStatement(SQL_FIND_ACCOUNTS_BY_USER_ID);
-			pstmt.setInt(1, userId);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				result.add(extractAccount(rs));
-			}
-		} catch (SQLException ex) {
-			LOG.error(Messages.ERR_CANNOT_OBTAIN_ACCOUNTS_BY_USER_ID, ex);
-			throw new DBException(Messages.ERR_CANNOT_OBTAIN_ACCOUNTS_BY_USER_ID, ex);
 		} finally {
 			factory.close(con, pstmt, rs);
 		}
@@ -173,35 +160,14 @@ public class AccountDAOImpl implements AccountDAO {
 	private Account extractAccount(ResultSet rs) throws SQLException {
 		Account account = new Account();
 		account.setId(rs.getInt(ACCOUNT_ID));
-		account.setUserId(rs.getInt(ACCOUNT_USER_ID));
 		account.setName(rs.getString(ACCOUNT_NAME));
 		account.setBalance(rs.getBigDecimal(ACCOUNT_BALANCE));
 		account.setAccountStatusId(rs.getInt(ACCOUNT_STATUS));
-		account.setCardid(rs.getInt(ACCOUNT_CARD_ID));
+		if (account.getCards() != null) {
+			account.getCards().setId((rs.getInt(ACCOUNT_CARD_ID)));
+		}
 
 		return account;
 	}
 
-	@Override
-	public List<Account> getAccountsByCardID(int cardId) throws DBException, ConnectionException  {
-		List<Account> result = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		ProxyConnection con = null;
-		try {
-			con = factory.getProxyConnection();
-			pstmt = con.prepareStatement(SQL_FIND_ACCOUNTS_BY_CARD_ID);
-			pstmt.setInt(1, cardId);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				result.add(extractAccount(rs));
-			}
-		} catch (SQLException ex) {
-			LOG.error(Messages.ERR_CANNOT_OBTAIN_CREDIT_CARD_BY_ID, ex);
-			throw new DBException(Messages.ERR_CANNOT_OBTAIN_CREDIT_CARD_BY_ID, ex);
-		} finally {
-			factory.close(con, pstmt, rs);
-		}
-		return result;
-	}
 }

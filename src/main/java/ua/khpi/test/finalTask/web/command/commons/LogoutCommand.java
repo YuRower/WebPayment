@@ -49,8 +49,8 @@ public class LogoutCommand extends Command {
 
 	private void savePreparedPayments(HttpSession session, HttpServletResponse response) throws ApplicationException, IOException {
 		User user = (User) session.getAttribute("user");
-		
-		if(user.getUserTypeId() == UserType.USER.ordinal()) {
+		LOG.debug(user);
+		if(user.getUserRoleId() == UserType.USER.ordinal()) {
 			LOG.trace("Saving user's prepared payments to cookies");
 			@SuppressWarnings("unchecked")
 			ArrayList<Payment> preparedPayments = (ArrayList<Payment>) session.getAttribute("prepPayments");

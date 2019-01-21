@@ -31,17 +31,20 @@ public class CommonLogic extends ApplicationLogic {
 		}
 	}
 
-	public void newUserWithDefaultValues(User user) throws DBException {
+	public boolean newUserWithDefaultValues(User user) throws DBException {
+		boolean result = false ;
 		try {
 			TransactionManager.beginTransaction();
-			userDao.newUserWithDefaultValues(user);
+			 result = userDao.newUserWithDefaultValues(user);
 			TransactionManager.commitTransaction();
 
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 			TransactionManager.rollbackTransaction();
+			
 
 		}
+		return result;
 	}
 
 	public boolean isEmailInUse(String email) throws DBException, ConnectionException {

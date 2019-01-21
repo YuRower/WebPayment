@@ -52,7 +52,7 @@ public class GetAccountsByCardCommnd extends Command {
 	private List<Account> getUserAccounts(String card_id) throws ApplicationException {
 		LOG.trace("card_id --> " + card_id);
 
-		List<Account> accounts = userLogic.getAccountsCardId(Integer.parseInt(card_id));
+		List<Account> accounts = userLogic.getAccountsByCardId(Integer.parseInt(card_id));
 		if (accounts.isEmpty()) {
 			LOG.trace("User have 0 acc");
 		} else {

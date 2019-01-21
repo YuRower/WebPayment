@@ -43,7 +43,8 @@ public class VerifyEmailCommand extends Command {
 		String email = request.getParameter("email");
 		LOG.trace("Email --> "+email);
 		String code = request.getParameter("code");
-		
+		LOG.trace("code --> "+code);
+
 		User user = commonLogic.findUserByEmail(email);
 		LOG.trace("User --> "+user);
 		if(user == null) {

@@ -1,7 +1,6 @@
 package ua.khpi.test.finalTask.web.command.user;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.khpi.test.finalTask.entity.Card;
+import ua.khpi.test.finalTask.entity.User;
 import ua.khpi.test.finalTask.exception.ApplicationException;
 import ua.khpi.test.finalTask.logic.UserLogic;
 import ua.khpi.test.finalTask.web.Path;
@@ -35,10 +35,14 @@ public class ListUserCardsCommand extends Command {
 		LOG.debug("Command starts");
 
 		HttpSession session = request.getSession();
-	
+		User user = (User) session.getAttribute("user");
+		LOG.debug("Get user with id " + user.getId());
+
 
 		LOG.trace("Get all user cards");
-		List<Card> cards = userLogic.getAllCardsByUserId();
+		List<Card> cards = userLogic.getAllCardsByUserId(user.getId());
+		LOG.debug("cards " + cards);
+
 		session.setAttribute("cards", cards);
 
 		LOG.debug("Command finished");

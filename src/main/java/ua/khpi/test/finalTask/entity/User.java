@@ -1,30 +1,57 @@
 package ua.khpi.test.finalTask.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User extends AbstractEntity {
-
 	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "surname")
 	private String surname;
+	@Column(name = "email")
+
 	private String email;
+	@Column(name = "email_verification")
+
 	private String emailVerification;
+	@Column(name = "password")
+
 	private String password;
-	private int userTypeId;
+	@Column(name = "user_role_id")
+	private int userRoleId;
+	
+	@Column(name = "user_status_id")
 	private int userStatusId;
 
-	public User() {}
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Card> cardList = new ArrayList<>();
 	
-	public User(String name, String surname, String email, String emailVerification, String password, int userTypeId, int userStatusId) {
+
+	public User() {
+	}
+
+	public User(String name, String surname, String email, String emailVerification, String password, int userRoleId,
+			int userStatusId) {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
 		this.emailVerification = emailVerification;
 		this.password = password;
-		this.userTypeId = userTypeId;
+		this.userRoleId = userRoleId;
 		this.userStatusId = userStatusId;
 	}
 
-	
 	public User(String name, String surname, String email, String emailVerification, String password) {
 		this.name = name;
 		this.surname = surname;
@@ -73,12 +100,12 @@ public class User extends AbstractEntity {
 		this.password = password;
 	}
 
-	public int getUserTypeId() {
-		return this.userTypeId;
+	public int getUserRoleId() {
+		return this.userRoleId;
 	}
 
-	public void setUserTypeId(int userTypeId) {
-		this.userTypeId = userTypeId;
+	public void setUserRoleId(int userRoleId) {
+		this.userRoleId = userRoleId;
 	}
 
 	public int getUserStatusId() {
@@ -91,8 +118,22 @@ public class User extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "User [id=" + getId() + ", name=" + name + ", surname=" + surname + ", email=" + email+ ", userTypeId=" + userTypeId
-				+ ", userStatusId=" + userStatusId + "]";
+		return "User [id=" + getId() + ", name=" + name + ", surname=" + surname + ", email=" + email + ", userRoleId="
+				+ userRoleId + ", userStatusId=" + userStatusId + "]";
+	}
+
+	/**
+	 * @return the cardList
+	 */
+	public List<Card> getCardList() {
+		return cardList;
+	}
+
+	/**
+	 * @param cardList the cardList to set
+	 */
+	public void setCardList(List<Card> cardList) {
+		this.cardList = cardList;
 	}
 
 }

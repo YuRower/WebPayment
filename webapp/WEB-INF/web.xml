@@ -63,7 +63,7 @@
 			<param-name>out-of-control</param-name>
 			<param-value>login registration verify redirectRegistration
 			redirectRegistrationCompleted redirectValidationCompleted language numCard
-			</param-value> 
+			</param-value>
 		</init-param>
 		<init-param>
 			<param-name>with-param</param-name>
@@ -119,4 +119,9 @@
 		<param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
 		<param-value>en</param-value>
 	</context-param>
+
+	<error-page>
+		<exception-type>ua.khpi.test.finalTask.exception.ApplicationException</exception-type>
+		<location>/WEB-INF/jsp/error_page.jsp</location>
+	</error-page>
 </web-app>

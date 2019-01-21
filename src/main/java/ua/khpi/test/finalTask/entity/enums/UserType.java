@@ -6,7 +6,7 @@ public enum UserType {
 	USER, ADMIN, SUPERUSER;
 	
 	public static UserType getType(User user) {
-		int typeId = user.getUserTypeId();
+		int typeId = user.getUserRoleId();
 		return UserType.values()[typeId];
 	}
 	

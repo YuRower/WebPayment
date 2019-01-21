@@ -66,6 +66,7 @@ public class Messages {
 	public static final String ERR_CANNOT_OBTAIN_CREDIT_CARDS_BY_ACCOUNT_ID = "Cannot obtain credit cards by account id";
 
 	public static final String ERR_CANNOT_OBTAIN_PAYMENTS_BY_ACCOUNT = "Cannot obtain payments by account id";
+	
 
 	public static final String ERR_CANNOT_GET_USER_ACCS = "Cannot execute query";
 

@@ -46,7 +46,7 @@ public class ReplenishAccountCommand extends Command {
 		String accountId = request.getParameter("accountId");
 		LOG.trace("Account id --> " + accountId);
 		int accID = Integer.parseInt(accountId);
-		validateAmount(amountStr);
+		double amountReceived = validateAmount(amountStr);
 		String card_id = String.valueOf(session.getAttribute("current_card"));
 
 		Card card = defineCard(Integer.parseInt(card_id));
@@ -56,7 +56,8 @@ public class ReplenishAccountCommand extends Command {
 		double amount = calculatePercentage(percentage, Double.parseDouble(amountStr));
 		LOG.trace("amount of payment with card fee --> " + amount);
 		Payment payment = new Payment();
-		payment.setMoneyAmount(new BigDecimal(amountStr+amount));
+		double finalPayment = amountReceived+amount;
+		payment.setMoneyAmount(new BigDecimal(finalPayment));
 		payment.setAccountIdTo(accID);
 		payment.setPaymentTypeId(PaymentType.REPLENISH.ordinal());
 		LOG.trace("Created payment --> " + payment);
@@ -97,13 +98,14 @@ public class ReplenishAccountCommand extends Command {
 	}
 
 	public double calculatePercentage(double percentage, double total) {
-		return total / 100 * percentage;
+		return percentage == 0 ? total : total / 100 * percentage;
 	}
 
-	private void validateAmount(String amountStr) throws ApplicationException {
+	private double validateAmount(String amountStr) throws ApplicationException {
 		double amount = Double.parseDouble(amountStr);
 		if (amount <= 0 || amount > 10000) {
 			throw new ApplicationException("Wrong amount");
 		}
+		return amount;
 	}
 }
