@@ -66,7 +66,7 @@ public class CreateNewCardCommand extends Command {
 		LOG.debug("Command finished");
 		LOG.debug("cardType" +cardType);
 
-		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_ACCOUNTS);
+		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_CARDS);
 	}
 
 	public BigDecimal generate() {

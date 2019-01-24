@@ -26,9 +26,12 @@ public final class Path {
 	public static final String PAGE_EPAM_TASK = "/WEB-INF/jsp/admin/list_task.jsp";
 	public static final String PAGE_USER_LIST = "/WEB-INF/jsp/admin/client_list.jsp";
 	public static final String PAGE_ACCOUNT_LIST = "/WEB-INF/jsp/admin/account_list.jsp";
-
+	public static final String PAGE_CART_REMOVAL_CONFIRMED = "/WEB-INF/jsp/user/card_deleted.jsp";
+	
 
 	// commands
+	public static final String COMMAND_REDIRECT_CART_REMOVAL_COMPLETED = "controller?command=redirectRemovalCart";
+
 	public static final String COMMAND_LIST_CARDS = "controller?command=listCards";
 	public static final String COMMAND_LIST_ACCOUNTS = "controller?command=listAccounts";
 	public static final String COMMAND_LIST_TRANSACTIONS= "controller?command=listTransactions";

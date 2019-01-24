@@ -54,9 +54,11 @@ public class ReplenishAccountCommand extends Command {
 		LOG.trace("card fee --> " + fee);
 		int percentage = defineCardFee(fee);
 		double amount = calculatePercentage(percentage, Double.parseDouble(amountStr));
-		LOG.trace("amount of payment with card fee --> " + amount);
+		LOG.trace("amount of payment with card fee --> " + percentage+""+ amount);
 		Payment payment = new Payment();
 		double finalPayment = amountReceived+amount;
+		LOG.trace("amount of payment with card fee --> " + finalPayment);
+
 		payment.setMoneyAmount(new BigDecimal(finalPayment));
 		payment.setAccountIdTo(accID);
 		payment.setPaymentTypeId(PaymentType.REPLENISH.ordinal());

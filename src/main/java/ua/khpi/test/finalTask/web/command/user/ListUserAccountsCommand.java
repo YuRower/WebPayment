@@ -43,7 +43,7 @@ public class ListUserAccountsCommand extends Command {
 			List<Account> accounts = getCardAccounts(card_id);
 			session.setAttribute("accounts", accounts);
 		}
-
+		
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.COMMAND_SORT_ACCOUNTS);
 	}

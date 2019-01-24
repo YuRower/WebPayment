@@ -10,7 +10,6 @@ import ua.khpi.test.finalTask.logic.AdminLogic;
 import ua.khpi.test.finalTask.logic.CommonLogic;
 import ua.khpi.test.finalTask.logic.Superuser;
 import ua.khpi.test.finalTask.logic.UserLogic;
-import ua.khpi.test.finalTask.web.command.admin.AccountsGreaterCommand;
 import ua.khpi.test.finalTask.web.command.admin.ActionsPageCommand;
 import ua.khpi.test.finalTask.web.command.admin.AdminActionCommand;
 import ua.khpi.test.finalTask.web.command.admin.AllAccountsCommand;
@@ -43,7 +42,6 @@ import ua.khpi.test.finalTask.web.command.user.ListUserAccountsCommand;
 import ua.khpi.test.finalTask.web.command.user.ListUserCardsCommand;
 import ua.khpi.test.finalTask.web.command.user.LockAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.NewPaymentCommand;
-import ua.khpi.test.finalTask.web.command.user.RedirectNewCardCommand;
 import ua.khpi.test.finalTask.web.command.user.ReplenishAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.SortAccountsCommand;
 import ua.khpi.test.finalTask.web.command.user.SortPaymentsCommand;
@@ -52,9 +50,11 @@ import ua.khpi.test.finalTask.web.command.user.RequestUnlockAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectAccountSettingsCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectListCartCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectNewAccountCommand;
+import ua.khpi.test.finalTask.web.command.user.redirect.RedirectNewCardCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectNewPaymentCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectRegistrationCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectRegistrationCompletedCommand;
+import ua.khpi.test.finalTask.web.command.user.redirect.RedirectRemovalCartCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectReplenishAccountCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectReplenishmentCompletedCommand;
 import ua.khpi.test.finalTask.web.command.user.redirect.RedirectValidationCompletedCommand;
@@ -82,7 +82,7 @@ public class CommandContainer {
 		commands.put("listCards", new ListUserCardsCommand(new UserLogic()));
 		commands.put("numCard", new GetAccountsByCardCommnd(new UserLogic()));
 		commands.put("lockAccount", new LockAccountCommand(new UserLogic()));
-		commands.put("deleteCare", new DeleteCartCommand(new UserLogic()));
+		commands.put("deleteCart", new DeleteCartCommand(new UserLogic()));
 
 		commands.put("sortAccounts", new SortAccountsCommand());
 		commands.put("sortTransactions", new SortPaymentsCommand());
@@ -104,6 +104,7 @@ public class CommandContainer {
 
 		commands.put("redirectNewAccount", new RedirectNewAccountCommand());
 		commands.put("redirectNewCard", new RedirectNewCardCommand());
+		commands.put("redirectRemovalCart", new RedirectRemovalCartCommand());
 
 		commands.put("closeAccount", new CloseAccountCommand(new UserLogic()));
 		commands.put("unlockAccount", new RequestUnlockAccountCommand(new UserLogic()));
@@ -117,7 +118,6 @@ public class CommandContainer {
 		commands.put("adminAction", new AdminActionCommand(new AdminLogic()));
 		commands.put("showActionConfirmed", new ShowActionConfirmedCommand());
 		commands.put("requestResponse", new RequestResponseCommand(new AdminLogic()));
-		commands.put("getAccountsGreater", new AccountsGreaterCommand(new AdminLogic()));
 		commands.put("userList", new GetUserListCommand(new AdminLogic()));
 
 		// superuser commands

@@ -71,10 +71,11 @@ public class RegistrationCommand extends Command {
 		// random string that will be used for verification purposes
 
 		String emailVerification = UUID.randomUUID().toString();
-		boolean isUserAdded = composeAndSaveUser(name, surname, email, emailVerification, password);
+	/*	boolean isUserAdded = composeAndSaveUser(name, surname, email, emailVerification, password);
 		if (isUserAdded) {
 			sendVerificationMail(email, emailVerification, request);
-		}
+		}*/
+		composeAndSaveUser(name, surname, email, null, password);
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_REDIRECT_REGISTRATION_COMPLETED);
 

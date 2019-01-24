@@ -48,8 +48,8 @@
 			redirectReplenishmentCompleted redirectAccountSettings 
 			redirectNewPayment newPayment clearCart executeCartPayments
 			listTransactions createNewAccount redirectNewAccount 
-			closeAccount unlockAccount changeAccountName getTransactionReport redirectNewCard createNewCard deleteCart
-			</param-value>
+			closeAccount unlockAccount changeAccountName getTransactionReport redirectNewCard createNewCard deleteCart redirectRemovalCart
+			</param-value> 
 		</init-param>
 		<init-param>
 			<param-name>superuser</param-name>

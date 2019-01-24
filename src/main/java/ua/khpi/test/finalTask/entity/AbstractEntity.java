@@ -8,28 +8,16 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
+@Data
+@NoArgsConstructor
 public abstract class AbstractEntity  {
-
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	public AbstractEntity(int id) {
-		this.id = id;
-	}
-
-	public AbstractEntity() {
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 }

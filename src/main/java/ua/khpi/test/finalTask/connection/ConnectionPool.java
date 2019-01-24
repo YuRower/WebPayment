@@ -1,10 +1,7 @@
 package ua.khpi.test.finalTask.connection;
 import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayDeque;
-import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,7 +19,7 @@ import ua.khpi.test.finalTask.exception.ConnectionException;
 public class ConnectionPool {
 	private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
-    private static AtomicBoolean instanceCreated = new AtomicBoolean(false);//multiple threads need to check and change the boolean
+    private static AtomicBoolean instanceCreated = new AtomicBoolean(false);
     private static ReentrantLock instanceLock = new ReentrantLock(true);
     private static ReentrantLock poolLock = new ReentrantLock(true);
     private static ConnectionPool instance;
@@ -68,7 +65,7 @@ public class ConnectionPool {
                 }
                 isFree.await(CONNECTION_TIMEOUT, TimeUnit.SECONDS);
                 if (connectionPool.isEmpty()) {
-                    throw new ConnectionException("connection timeout exceeded... connection isn't available now, try later.");
+                    throw new ConnectionException("connection timeout exceeded, connection isn't available now, try later.");
                 }
             }
             LOGGER.log(Level.TRACE, "connection was acquired from connection pool.");
@@ -82,7 +79,6 @@ public class ConnectionPool {
 
     
     void releaseConnection(ProxyConnection connection) {
-
         poolLock.lock();
         try {
             connectionPool.offer(connection);

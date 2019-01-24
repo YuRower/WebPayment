@@ -19,7 +19,6 @@
 					<table class="center">
 						<tr>
 							<th>id</th>
-							<th>user id</th>
 							<th>name</th>
 							<th>balance</th>
 							<th>status</th>
@@ -28,7 +27,6 @@
 						<c:forEach var="item" items="${accounts}">
 							<tr>
 								<td><c:out value="${item.id}" /></td>
-								<td><c:out value="${item.userId}" /></td>
 								<td><c:out value="${item.name}" /></td>
 								<td><c:out value="${item.balance}" /></td>
 								<c:choose>

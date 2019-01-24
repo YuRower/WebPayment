@@ -1,46 +1,38 @@
 package ua.khpi.test.finalTask.logic;
 
-import ua.khpi.test.finalTask.connection.util.TransactionManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import ua.khpi.test.finalTask.entity.User;
-import ua.khpi.test.finalTask.entity.enums.UserStatus;
 import ua.khpi.test.finalTask.exception.ConnectionException;
 import ua.khpi.test.finalTask.exception.DBException;
 
 public class CommonLogic extends ApplicationLogic {
+	private static final Logger LOG = LogManager.getLogger(CommonLogic.class);
 
 	public User findUserByEmail(String email) throws DBException, ConnectionException {
 		try {
 			return userDao.findUserByEmail(email);
 		} catch (ConnectionException e) {
-			e.printStackTrace();
+			LOG.error(e);
 			throw e;
 		}
 	}
 
 	public void update(User user) throws DBException {
 		try {
-			TransactionManager.beginTransaction();
-
 			userDao.update(user);
-			TransactionManager.commitTransaction();
-
 		} catch (ConnectionException e) {
-			e.printStackTrace();
-			TransactionManager.rollbackTransaction();
-
+			LOG.error(e);
 		}
 	}
 
 	public boolean newUserWithDefaultValues(User user) throws DBException {
 		boolean result = false ;
 		try {
-			TransactionManager.beginTransaction();
 			 result = userDao.newUserWithDefaultValues(user);
-			TransactionManager.commitTransaction();
-
 		} catch (ConnectionException e) {
 			e.printStackTrace();
-			TransactionManager.rollbackTransaction();
 			
 
 		}

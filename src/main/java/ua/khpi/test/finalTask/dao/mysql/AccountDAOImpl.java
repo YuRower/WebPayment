@@ -5,15 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
 import com.mysql.jdbc.Statement;
-
 import ua.khpi.test.finalTask.connection.ProxyConnection;
 import ua.khpi.test.finalTask.dao.AccountDAO;
 import ua.khpi.test.finalTask.entity.Account;
@@ -31,16 +25,6 @@ public class AccountDAOImpl implements AccountDAO {
 		this.factory = factory;
 	}
 
-	private static final SessionFactory sessionFactory;
-
-	static {
-		try {
-			sessionFactory = new Configuration().configure().buildSessionFactory();
-		} catch (Throwable e) {
-			LOG.error("Initial SessionFactory creation failed." + e);
-			throw new ExceptionInInitializerError(e);
-		}
-	}
 
 	public static final String ACCOUNT_ID = "id";
 	public static final String ACCOUNT_NAME = "name";
@@ -133,21 +117,21 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public List<Account> getAllAccounts() throws DBException, ConnectionException {
 		List<Account> result = new ArrayList<>();
-		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		ProxyConnection con = null;
 		try {
 			con = factory.getProxyConnection();
-			pstmt = con.prepareStatement(SQL_FIND_ALL_ACCOUNTS);
-			rs = pstmt.executeQuery();
+			stmt = (Statement) con.createStatement();
+			rs = stmt.executeQuery(SQL_FIND_ALL_ACCOUNTS);
 			while (rs.next()) {
 				result.add(extractAccount(rs));
 			}
 		} catch (SQLException ex) {
-			LOG.error(Messages.ERR_CANNOT_OBTAIN_ACCOUNTS_BY_USER_ID, ex);
-			throw new DBException(Messages.ERR_CANNOT_OBTAIN_ACCOUNTS_BY_USER_ID, ex);
+			LOG.error(Messages.ERR_CANNOT_OBTAIN_ACCOUNTS, ex);
+			throw new DBException(Messages.ERR_CANNOT_OBTAIN_ACCOUNTS, ex);
 		} finally {
-			factory.close(con, pstmt, rs);
+			factory.close(con, stmt, rs);
 		}
 		return result;
 	}

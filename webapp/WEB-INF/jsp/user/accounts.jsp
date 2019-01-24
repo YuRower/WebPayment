@@ -82,6 +82,7 @@
 				</c:if>
 				<c:if test="${empty accounts}">
 					<h3><fmt:message key="acc.enum.noacc"/></h3>
+					
 					<p><a href="controller?command=redirectNewAccount"><fmt:message key="acc.enum.click"/></a> <fmt:message key="acc.enum.newacc"/></p>
 				</c:if>
 				

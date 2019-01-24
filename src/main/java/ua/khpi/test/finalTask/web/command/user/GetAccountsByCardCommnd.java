@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,12 +39,10 @@ public class GetAccountsByCardCommnd extends Command {
 		LOG.debug("Command starts");
 
 		HttpSession session = request.getSession();
-		//String card_id = String.valueOf(session.getAttribute("current_card"));
         String card_id = request.getParameter("current_card");
 		List<Account> accounts = getUserAccounts(card_id);
 		session.setAttribute("accounts", accounts);
 		session.setAttribute("current_card", card_id);
-
 
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.COMMAND_SORT_ACCOUNTS);

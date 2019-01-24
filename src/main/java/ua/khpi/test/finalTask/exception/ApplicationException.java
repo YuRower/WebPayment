@@ -2,6 +2,7 @@ package ua.khpi.test.finalTask.exception;
 
 public class ApplicationException extends Exception {
 	
+
 	public ApplicationException() {
 		super();
 	}

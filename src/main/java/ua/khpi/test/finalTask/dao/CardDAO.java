@@ -8,13 +8,7 @@ import ua.khpi.test.finalTask.exception.ConnectionException;
 import ua.khpi.test.finalTask.exception.DBException;
 
 public interface CardDAO extends CrudDAO<Card> {
-
 	List<Card> getAllUserCards();
-
-
 	List<Account> getAccountsByCardId(int cardId) throws ConnectionException, DBException;
-
-
 	List<Card> getAllCardsByUserId(int id);
-
 }

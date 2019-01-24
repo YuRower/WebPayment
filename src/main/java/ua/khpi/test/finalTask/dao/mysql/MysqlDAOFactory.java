@@ -4,11 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,10 +14,8 @@ import ua.khpi.test.finalTask.dao.AccountDAO;
 import ua.khpi.test.finalTask.dao.CardDAO;
 import ua.khpi.test.finalTask.dao.PaymentsDAO;
 import ua.khpi.test.finalTask.dao.RequestDAO;
-import ua.khpi.test.finalTask.dao.UserAccountsCountDAO;
 import ua.khpi.test.finalTask.dao.UserDAO;
 import ua.khpi.test.finalTask.exception.ConnectionException;
-import ua.khpi.test.finalTask.exception.DBException;
 import ua.khpi.test.finalTask.exception.Messages;
 
 public class MysqlDAOFactory extends AbstractDAOFactory {
@@ -32,7 +25,7 @@ public class MysqlDAOFactory extends AbstractDAOFactory {
 	private static MysqlDAOFactory instance;
 	private static ProxyConnection connection;
 
-	public static synchronized MysqlDAOFactory getInstance() throws DBException {
+	public static synchronized MysqlDAOFactory getInstance() {
 		if (instance == null) {
 			instance = new MysqlDAOFactory();
 		}
@@ -43,7 +36,9 @@ public class MysqlDAOFactory extends AbstractDAOFactory {
 	}
 
 	public ProxyConnection getProxyConnection() throws SQLException, ConnectionException {
-		connection = ConnectionPool.getInstance().getConnection();
+		if (connection == null) {
+			connection = ConnectionPool.getInstance().getConnection();
+		}
 		return connection;
 
 	}
@@ -102,11 +97,6 @@ public class MysqlDAOFactory extends AbstractDAOFactory {
 	@Override
 	public RequestDAO getRequestDAO() {
 		return new RequestDAOImpl(instance);
-	}
-
-	@Override
-	public UserAccountsCountDAO getUserAccountsCountDAO() {
-		return new UserAccountsCountDAOImpl(instance);
 	}
 
 	@Override

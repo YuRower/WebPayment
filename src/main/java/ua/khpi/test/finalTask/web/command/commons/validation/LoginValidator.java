@@ -20,13 +20,13 @@ public class LoginValidator extends Middleware {
 	@Override
 	public boolean check() throws ApplicationException {
 		AbstractDAOFactory mysqlFactory = AbstractDAOFactory.getDAOFactory(FactoryTypes.MYSQL);
-		UserDAO userDao = mysqlFactory.getUserDAO();
+		UserDAO userDao = mysqlFactory.getUserDAO(); 
 		LOG.trace("Request parameter: login --> " + login);
 		
 		if (userDao.isEmailInUse(login)) {
 			throw new ApplicationException("User with such login already exists");
 		}
-		if (login == null || login.trim().isEmpty() || !login.matches(RegularExpressions.USERNAME)) {
+		if (login == null || login.trim().isEmpty() || !login.matches(RegularExpressions.EMAIL)) {
 			throw new ApplicationException("Invalid login");
 		} else {
 			return checkNext();

@@ -42,15 +42,13 @@ Header (top area).
 			<form action="controller" method="post">
 			<input type="hidden" name="command" value="numCard" />			
  					 <button type="submit" name="current_card" value="${card.id}" class="btn-link"> Card ${card.cardNumber }</button>
-			<c:set var="current_card" value="${card.id}"
-    scope="session" />
+						<c:set var="current_card" value="${card.id}" scope="application" />
 			</form>
 			<%-- <a href="<c:url value='controller?command=numCard'/>">Card ${card.cardNumber }</a> &nbsp;<a href="controller?command=listCart"><fmt:message key="header.cart"/></a> &nbsp;--%>
 			</c:forEach>
 		</c:when>
 	</c:choose>
 </div>
-
 <div id="rightHeader" >
 
 	<c:out value="${user.name} ${user.surname}"/>
