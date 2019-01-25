@@ -13,7 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.khpi.test.finalTask.entity.Account;
-import ua.khpi.test.finalTask.entity.User;
 import ua.khpi.test.finalTask.entity.enums.AccountStatus;
 import ua.khpi.test.finalTask.exception.ApplicationException;
 import ua.khpi.test.finalTask.logic.UserLogic;
@@ -38,9 +37,11 @@ public class ListUserAccountsCommand extends Command {
 		LOG.debug("Command starts");
 
 		HttpSession session = request.getSession();
-		String card_id = String.valueOf(session.getAttribute("current_card"));
-		if (!card_id.equals("null")) {
-			List<Account> accounts = getCardAccounts(card_id);
+		
+		Object card_id = session.getAttribute("current_card");
+		 
+		if (card_id != null) {
+			List<Account> accounts = getCardAccounts(Integer.valueOf((String) card_id));
 			session.setAttribute("accounts", accounts);
 		}
 		
@@ -48,10 +49,10 @@ public class ListUserAccountsCommand extends Command {
 		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.COMMAND_SORT_ACCOUNTS);
 	}
 
-	private List<Account> getCardAccounts(String card_id) throws ApplicationException {
+	private List<Account> getCardAccounts(Integer card_id) throws ApplicationException {
 		LOG.trace("card_id --> " + card_id);
 		List<Account> accounts = null;
-		accounts = userLogic.getAccountsByCardId(Integer.parseInt(card_id));
+		accounts = userLogic.getAccountsByCardId(card_id);
 		if (accounts.isEmpty()) {
 			LOG.trace("User have 0 acc");
 		} else {
@@ -63,12 +64,11 @@ public class ListUserAccountsCommand extends Command {
 
 	private List<Account> extractClosedAccounts(List<Account> accounts) {
 		List<Account> closedAccounts = new ArrayList<>();
-		for (Account account : accounts) {
+		closedAccounts.forEach(account->{
 			LOG.trace("Found acc --> " + account);
-			if (account.getAccountStatusId() == AccountStatus.CLOSED.ordinal()) {
-				closedAccounts.add(account);
-			}
-		}
+			if(account.getAccountStatusId() == AccountStatus.CLOSED.ordinal()){
+				closedAccounts.add(account);			}
+		});
 		accounts.removeAll(closedAccounts);
 		return accounts;
 	}

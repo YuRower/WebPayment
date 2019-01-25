@@ -9,9 +9,7 @@
 <body>
 	<table id="main-container">
 
-		<%-- HEADER --%>
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
-		<%-- HEADER --%>
 
 		<tr><td class="content center">
 			<tldLib:getTime/><br/>
@@ -20,9 +18,7 @@
 				<a href="controller?command=listRequests"><fmt:message key="adm.act.req"/></a>			
 				<a href="controller?command=actionsPage"><fmt:message key="adm.act.act"/></a>		
 				<a href="controller?command=userList"><fmt:message key="adm.act.usrlst"/></a>
-				<a href="controller?command=listAllAccounts"><fmt:message key="adm.act.accLst"/></a>&nbsp;			
-							
-					
+				<a href="controller?command=listAllAccounts"><fmt:message key="adm.act.accLst"/></a>&nbsp;															
 			</p>
 		</td></tr>
 		<%@ include file="/WEB-INF/jspf/footer.jspf"%>

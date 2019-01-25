@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -28,7 +26,6 @@ public class SecurityFilter implements Filter {
 
 	private static final Logger LOG = LogManager.getLogger(SecurityFilter.class);
 
-	// commands access
 	private Map<UserType, List<String>> accessMap = new HashMap<>();
 	private List<String> commons = new ArrayList<String>();
 	private List<String> withParam = new ArrayList<String>();
@@ -83,20 +80,6 @@ public class SecurityFilter implements Filter {
 			LOG.debug("User is not defined");
 			return false;
 		}
-		/*Pattern p1 = Pattern.compile("([a-zA-Z])\\w+[?]\\w+[=]\\d+");
-		Matcher m1 = p1.matcher(commandName);
-
-		boolean b = m1.matches();
-		if (b) {
-			LOG.debug("Request with param " + commandName);
-			int iend = commandName.indexOf("?");
-			String subString;
-			if (iend != -1) {
-				subString = commandName.substring(0, iend);
-				LOG.debug("Command "+ subString);
-			}
-			return true;
-		}*/
 
 		return accessMap.get(userType).contains(commandName) || commons.contains(commandName);
 	}
@@ -104,33 +87,25 @@ public class SecurityFilter implements Filter {
 	public void init(FilterConfig fConfig) throws ServletException {
 		LOG.debug("Filter initialization starts");
 
-		// roles
 		accessMap.put(UserType.ADMIN, asList(fConfig.getInitParameter("admin")));
 		accessMap.put(UserType.USER, asList(fConfig.getInitParameter("user")));
 		accessMap.put(UserType.SUPERUSER, asList(fConfig.getInitParameter("superuser")));
 
 		LOG.trace("Access map --> " + accessMap);
 
-		// commons
 		commons = asList(fConfig.getInitParameter("common"));
 		LOG.trace("Common commands --> " + commons);
 
 		withParam = asList(fConfig.getInitParameter("with-param"));
 		LOG.trace("Common commands --> " + withParam);
 
-		// out of control
 		outOfControl = asList(fConfig.getInitParameter("out-of-control"));
 		LOG.trace("Out of control commands --> " + outOfControl);
 
 		LOG.debug("Filter initialization finished");
 	}
 
-	/**
-	 * Extracts parameter values from string.
-	 * 
-	 * @param str parameter values string.
-	 * @return list of parameter values.
-	 */
+	
 	private List<String> asList(String str) {
 		List<String> list = new ArrayList<String>();
 		StringTokenizer st = new StringTokenizer(str);

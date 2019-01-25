@@ -2,9 +2,7 @@ package ua.khpi.test.finalTask.web.command.user;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import lombok.NonNull;
 import ua.khpi.test.finalTask.entity.Account;
 import ua.khpi.test.finalTask.entity.Card;
 import ua.khpi.test.finalTask.entity.enums.AccountStatus;
@@ -42,21 +41,27 @@ public class CreateNewAccountCommand extends Command {
 		HttpSession session = request.getSession();
 
 		String accName = request.getParameter("name");
-		checkName(accName);
 
-		String card_id = String.valueOf(session.getAttribute("current_card"));
+		checkName(accName);
+		String card_id1= (String) session.getAttribute("current_card");
+		LOG.debug(" " + card_id1 + " " + accName);
+		Integer card_id = Integer.valueOf((String)session.getAttribute("current_card"));
 		LOG.debug(" " + card_id + " " + accName);
-		Card card = null;
-		if (card_id.equals("null")) {
+		Card result = null;
+		
+		if (card_id == null) {
 			List<Card> cardList = userLogic.getAllUserCards();
-			ListIterator<Card> listIter = cardList.listIterator();
-			card = listIter.next();
+			LOG.debug("cardList" + cardList);
+			result = cardList.stream().findFirst().get();
+			if (result == null) {
+				throw new ApplicationException("First you need add a card");
+			}
+			LOG.debug("findFirst" + result);
+			card_id = result.getId();
 		}
-		if (card_id == null || card_id.isEmpty()) {
-			throw new ApplicationException("First you need to add a card");
-		}
-		int id = card.getId();
-		addAccount(accName, id);
+		
+		
+		addAccount(accName, card_id);
 
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_ACCOUNTS);
@@ -67,19 +72,16 @@ public class CreateNewAccountCommand extends Command {
 		LOG.trace("Cart has " + accounts.size() + " accounts");
 
 		if (accounts.size() >= 5) {
-			throw new ApplicationException("You can't have more than 5 accounts in one cart");
+			throw new ApplicationException("You can't have more than 5 accounts in one cart(includes the closet accounts)");
 		}
 
-		Account newAccount = new Account(accName, START_BALANCE, AccountStatus.OPEN.ordinal(), (cardID));
-		newAccount.setName(accName);
-		newAccount.setBalance(START_BALANCE);
-		newAccount.setAccountStatusId(AccountStatus.OPEN.ordinal());
-		newAccount.getCards().setId(cardID);
+		Account newAccount = new Account(accName, START_BALANCE, AccountStatus.OPEN.ordinal(), cardID);
+	
 		userLogic.addEntity(newAccount);
 		LOG.trace("Account added");
 	}
 
-	private void checkName(String accName) throws ApplicationException {
+	private void checkName(@NonNull String accName) throws ApplicationException {
 		LOG.trace("New account name --> " + accName);
 		if (!accName.matches(RegularExpressions.ACCOUNT_NAME)) {
 			throw new ApplicationException("Wrong account name");

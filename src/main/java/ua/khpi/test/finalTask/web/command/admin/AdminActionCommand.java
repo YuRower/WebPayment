@@ -20,7 +20,6 @@ import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
 
-
 public class AdminActionCommand extends Command {
 
 	private static final Logger LOG = LogManager.getLogger(AdminActionCommand.class);

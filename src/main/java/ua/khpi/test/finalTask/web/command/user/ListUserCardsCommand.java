@@ -31,20 +31,18 @@ public class ListUserCardsCommand extends Command {
 	@Override
 	public RequestProcessorInfo execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, ApplicationException {
-		
 		LOG.debug("Command starts");
-
+		
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		LOG.debug("Get user with id " + user.getId());
-
-
+		
 		LOG.trace("Get all user cards");
+		
 		List<Card> cards = userLogic.getAllCardsByUserId(user.getId());
 		LOG.debug("cards " + cards);
-
 		session.setAttribute("cards", cards);
-
+		
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.COMMAND_LIST_ACCOUNTS);
 	}

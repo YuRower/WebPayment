@@ -5,19 +5,15 @@
 
 <c:set var="title" value="Registration completed" />
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
-<file:isUserLogged/>
+<file:isUserLogged />
 
 <body>
 	<table id="main-container">
 
-		<%-- HEADER --%>
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
-		<%-- HEADER --%>
 
 		<tr>
-			<td class="content center">
-				<fmt:message key="cart.deleted"/>
-			</td>
+			<td class="content center"><fmt:message key="cart.deleted" /></td>
 		</tr>
 
 		<%@ include file="/WEB-INF/jspf/footer.jspf"%>

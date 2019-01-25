@@ -9,9 +9,7 @@
 <body>
 	<table id="main-container">
 
-		<%-- HEADER --%>
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
-		<%-- HEADER --%>
 
 		<tr><td class="content center">
 			<c:if test="${not empty requests}">

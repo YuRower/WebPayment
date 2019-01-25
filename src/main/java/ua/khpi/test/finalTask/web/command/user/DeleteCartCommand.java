@@ -37,10 +37,20 @@ public class DeleteCartCommand extends Command {
 		LOG.debug("Get user with id " + user.getId());
 		String cardId = request.getParameter("cardID");
 		LOG.debug("card id that will be deleted" + cardId);
+		deleteCart(user, cardId);
+
+		LOG.debug("Command finished");
+
+		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_REDIRECT_CART_REMOVAL_COMPLETED);
+
+	}
+
+	private void deleteCart(User user, String cardId) throws ApplicationException {
 		List<Card> allCard = userLogic.getAllCardsByUserId(user.getId());
 		Card matchingCard = allCard.stream().filter(p -> p.getCardNumber().toString().equals(cardId)).findAny()
 				.orElse(null);
-		LOG.debug("card  that will be deleted" + matchingCard);
+		LOG.debug("cart that will be deleted" + matchingCard);
+		
 		if (matchingCard == null) {
 			throw new ApplicationException("Card with such number not found");
 		} else {
@@ -49,11 +59,6 @@ public class DeleteCartCommand extends Command {
 			LOG.debug("card status removed" + isDeleted);
 
 		}
-
-		LOG.debug("Command finished");
-
-		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_REDIRECT_CART_REMOVAL_COMPLETED);
-
 	}
 
 }

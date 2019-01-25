@@ -33,15 +33,15 @@ public class GetUserListCommand extends Command {
 		LOG.debug("Command starts");
 		HttpSession session = request.getSession();
 
-		List<User> list = getList();
-		LOG.trace("Returned list --> " + list);
+		List<User> list = getAllUserList();
+		LOG.trace("Returned user list --> " + list);
 
 		session.setAttribute("userList", list);
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.PAGE_USER_LIST);
 	}
 
-	private List<User> getList() throws ApplicationException {
+	private List<User> getAllUserList() throws ApplicationException {
 		return adminLogic.getAllUsers();
 	}
 

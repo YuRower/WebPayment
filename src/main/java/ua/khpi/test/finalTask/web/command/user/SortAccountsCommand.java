@@ -1,6 +1,8 @@
 package ua.khpi.test.finalTask.web.command.user;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -39,6 +41,7 @@ public class SortAccountsCommand extends Command {
 			switch (sortBy) {
 			case "number":
 				accounts.sort((acc1, acc2) -> acc1.getId() - acc2.getId());
+				//Arrays.sort(accounts,Comparator.comparing(Account ::getId));
 				break;
 			case "balance":
 				accounts.sort((acc1, acc2) -> acc2.getBalance().compareTo(acc1.getBalance()));

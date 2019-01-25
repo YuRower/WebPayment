@@ -16,16 +16,12 @@ public class ContextListener implements ServletContextListener {
 
 	private static final Logger LOG = LogManager.getLogger(ContextListener.class);
 
-	/**
-	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
-	 */
+
 	public void contextDestroyed(ServletContextEvent arg0) {
 		LOG.trace("Servlet context destruction");
 	}
 
-	/**
-	 * @see ServletContextListener#contextInitialized(ServletContextEvent)
-	 */
+	
 	public void contextInitialized(ServletContextEvent arg0) {
 		LOG.trace("Servlet context initialization started");
 		initCommandContainer();

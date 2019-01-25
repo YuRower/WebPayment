@@ -16,10 +16,6 @@ import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
 
-/**
- * Command that changes language
- * 
- */
 public class ChangeLanguageCommand extends Command {
 
 	private static final Logger LOG = LogManager.getLogger(ChangeLanguageCommand.class);

@@ -3,15 +3,13 @@
 
 <html>
 
-<c:set var="title" value="Epam task" />
+<c:set var="title" value="Final Task" />
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
 
 <body>
 	<table id="main-container">
 
-		<%-- HEADER --%>
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
-		<%-- HEADER --%>
 
 		<tr>
 			<td class="content center">

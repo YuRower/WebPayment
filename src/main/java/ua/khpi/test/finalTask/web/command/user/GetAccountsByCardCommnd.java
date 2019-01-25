@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.khpi.test.finalTask.entity.Account;
-import ua.khpi.test.finalTask.entity.User;
 import ua.khpi.test.finalTask.entity.enums.AccountStatus;
 import ua.khpi.test.finalTask.exception.ApplicationException;
 import ua.khpi.test.finalTask.logic.UserLogic;
@@ -37,20 +35,17 @@ public class GetAccountsByCardCommnd extends Command {
 	public RequestProcessorInfo execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, ApplicationException {
 		LOG.debug("Command starts");
-
 		HttpSession session = request.getSession();
         String card_id = request.getParameter("current_card");
 		List<Account> accounts = getUserAccounts(card_id);
 		session.setAttribute("accounts", accounts);
 		session.setAttribute("current_card", card_id);
-
 		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.COMMAND_SORT_ACCOUNTS);
 	}
 
 	private List<Account> getUserAccounts(String card_id) throws ApplicationException {
 		LOG.trace("card_id --> " + card_id);
-
 		List<Account> accounts = userLogic.getAccountsByCardId(Integer.parseInt(card_id));
 		if (accounts.isEmpty()) {
 			LOG.trace("User have 0 acc");
@@ -63,12 +58,11 @@ public class GetAccountsByCardCommnd extends Command {
 
 	private List<Account> extractClosedAccounts(List<Account> accounts) {
 		List<Account> closedAccounts = new ArrayList<>();
-		for (Account account : accounts) {
+		closedAccounts.forEach(account->{
 			LOG.trace("Found acc --> " + account);
-			if (account.getAccountStatusId() == AccountStatus.CLOSED.ordinal()) {
-				closedAccounts.add(account);
-			}
-		}
+			if(account.getAccountStatusId() == AccountStatus.CLOSED.ordinal()){
+				closedAccounts.add(account);			}
+		});
 		accounts.removeAll(closedAccounts);
 		return accounts;
 	}

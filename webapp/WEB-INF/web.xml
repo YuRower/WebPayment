@@ -5,21 +5,21 @@
 
 	<display-name>Final task</display-name>
 
-	<!-- Welcome files -->
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
 
-	<!-- Listeners -->
 	<listener>
 		<listener-class>ua.khpi.test.finalTask.web.listeners.ContextListener</listener-class>
 	</listener>
 	<listener>
 		<listener-class>ua.khpi.test.finalTask.web.listeners.SessionListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>ua.khpi.test.finalTask.web.listeners.RequestListener</listener-class>
+	</listener>
 
 
-	<!-- Servlet-controller -->
 	<servlet>
 		<servlet-name>Controller</servlet-name>
 		<servlet-class>ua.khpi.test.finalTask.web.Controller</servlet-class>
@@ -29,7 +29,6 @@
 		<url-pattern>/controller</url-pattern>
 	</servlet-mapping>
 
-	<!-- Security filter -->
 	<filter>
 		<display-name>SecurityFilter</display-name>
 		<filter-name>SecurityFilter</filter-name>
@@ -49,7 +48,7 @@
 			redirectNewPayment newPayment clearCart executeCartPayments
 			listTransactions createNewAccount redirectNewAccount 
 			closeAccount unlockAccount changeAccountName getTransactionReport redirectNewCard createNewCard deleteCart redirectRemovalCart
-			</param-value> 
+			</param-value>
 		</init-param>
 		<init-param>
 			<param-name>superuser</param-name>
@@ -72,7 +71,15 @@
 		</init-param>
 	</filter>
 
-	<!-- Encoding support filter -->
+	<filter>
+		<filter-name>LogRequestFilter</filter-name>
+		<filter-class>ua.khpi.test.finalTask.web.filter.LogRequestFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LogRequestFilter</filter-name>
+		<servlet-name>Controller</servlet-name>
+	</filter-mapping>
+
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
 		<filter-class>ua.khpi.test.finalTask.web.filter.EncodingFilter</filter-class>
@@ -87,17 +94,18 @@
 		<url-pattern>/WEB-INF/jsp/*</url-pattern>
 		<servlet-name>Controller</servlet-name>
 	</filter-mapping>
+
 	<filter-mapping>
 		<filter-name>SecurityFilter</filter-name>
 		<servlet-name>Controller</servlet-name>
 	</filter-mapping>
 
-	<!-- Session Configuration -->
+
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>
 
-	<!-- Datasource reference -->
+
 	<resource-ref>
 		<description>MySQL DB Connection Pool</description>
 		<res-ref-name>jdbc/web_payment</res-ref-name>
@@ -105,12 +113,12 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
-	<!-- Mail properties -->
+
 	<context-param>
 		<param-name>mail</param-name>
 		<param-value>/WEB-INF/config/mail.properties</param-value>
 	</context-param>
-	<!-- I18n properties -->
+
 	<context-param>
 		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
 		<param-value>ua.khpi.test.finalTask.i18n.i18n</param-value>

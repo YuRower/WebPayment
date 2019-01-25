@@ -52,11 +52,13 @@ public class ReplenishAccountCommand extends Command {
 		Card card = defineCard(Integer.parseInt(card_id));
 		Fee fee = Fee.getFee(card);
 		LOG.trace("card fee --> " + fee);
+		
 		int percentage = defineCardFee(fee);
-		double amount = calculatePercentage(percentage, Double.parseDouble(amountStr));
-		LOG.trace("amount of payment with card fee --> " + percentage+""+ amount);
+		double amountPercentage = calculatePercentage(percentage, Double.parseDouble(amountStr));
+		LOG.trace("amount of payment with card fee --> " + percentage+""+ amountPercentage);
+		
 		Payment payment = new Payment();
-		double finalPayment = amountReceived+amount;
+		double finalPayment = amountReceived+amountPercentage;
 		LOG.trace("amount of payment with card fee --> " + finalPayment);
 
 		payment.setMoneyAmount(new BigDecimal(finalPayment));
@@ -100,7 +102,7 @@ public class ReplenishAccountCommand extends Command {
 	}
 
 	public double calculatePercentage(double percentage, double total) {
-		return percentage == 0 ? total : total / 100 * percentage;
+		return  total / 100 * percentage;
 	}
 
 	private double validateAmount(String amountStr) throws ApplicationException {

@@ -11,9 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.khpi.test.finalTask.dao.AbstractDAOFactory;
-import ua.khpi.test.finalTask.dao.AbstractDAOFactory.FactoryTypes;
-import ua.khpi.test.finalTask.dao.PaymentsDAO;
 import ua.khpi.test.finalTask.entity.Payment;
 import ua.khpi.test.finalTask.exception.ApplicationException;
 import ua.khpi.test.finalTask.logic.UserLogic;
@@ -47,11 +44,8 @@ public class ListTransactionsCommand extends Command {
 	}
 
 	private List<Payment> getPaymentsInAccount(String accId) throws ApplicationException {
-	
-
 		LOG.trace("Setting acc --> " + accId);
 		int accountId = Integer.parseInt(accId);
-
 		return userLogic.getPaymentsByAccount(accountId);
 	}
 }

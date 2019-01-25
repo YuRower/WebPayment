@@ -9,41 +9,40 @@
 <body>
 	<table id="main-container">
 
-		<%-- HEADER --%>
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
-		<%-- HEADER --%>
 
 		<tr>
-		
+
 			<td class="content center">
 				<h3>
 					<fmt:message key="newcard.header" />
 				</h3>
-				<button class="collapsible" style="  background-color: gold ">Get info about Golden
-					Card</button>
+				<button class="collapsible" style="background-color: gold">Get
+					info about Golden Card</button>
 				<div class="content_text">
-					<p>The gold card adds to the account 2 percent of the total amount of the deposit.
-</p>
+					<p>The gold card adds to the account 2 percent of the total
+						amount of the deposit.</p>
 				</div>
 				<form action="controller" method="POST">
-					<input type="hidden" name="command" value="createNewCard" /> <input type="hidden"
-						name="card_type" value="gold" /> <input type="submit"
-						value="<fmt:message key="newcard.submit"/>">
+					<input type="hidden" name="command" value="createNewCard" /> <input
+						type="hidden" name="card_type" value="gold" /> <input
+						type="submit" value="<fmt:message key="newcard.submit"/>">
 				</form>
 			</td>
 		</tr>
 
 		<tr>
 			<td class="content center">
-				<button class="collapsible" style="  background-color: silver ">Get info about Silver Card</button>
+				<button class="collapsible" style="background-color: silver">Get
+					info about Silver Card</button>
 				<div class="content_text">
-					<p>The silver card adds to the account 1 percent of the total amount of the deposit.
-</p>
+					<p>The silver card adds to the account 1 percent of the total
+						amount of the deposit.</p>
 				</div>
 				<form action="controller" method="POST">
-					<input type="hidden" name="command" value="createNewCard" /> <input type="hidden"
-						name="card_type" value="silver" /> <input type="submit"
-						value="<fmt:message key="newcard.submit"/>">
+					<input type="hidden" name="command" value="createNewCard" /> <input
+						type="hidden" name="card_type" value="silver" /> <input
+						type="submit" value="<fmt:message key="newcard.submit"/>">
 				</form>
 			</td>
 		</tr>
@@ -52,12 +51,13 @@
 			<td class="content center">
 				<button class="collapsible">Get info about Default Card</button>
 				<div class="content_text">
-					<p>The default card adds to the account -1 percent of the total amount of the deposit.</p>
+					<p>The default card adds to the account -1 percent of the total
+						amount of the deposit.</p>
 				</div>
 				<form action="controller" method="POST">
-					<input type="hidden" name="command" value="createNewCard" /> <input type="hidden"
-						name="card_type" value="default" /> <input type="submit"
-						value="<fmt:message key="newcard.submit"/>">
+					<input type="hidden" name="command" value="createNewCard" /> <input
+						type="hidden" name="card_type" value="default" /> <input
+						type="submit" value="<fmt:message key="newcard.submit"/>">
 				</form>
 			</td>
 		</tr>

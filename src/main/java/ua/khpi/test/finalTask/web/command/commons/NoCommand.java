@@ -11,10 +11,7 @@ import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
 
-/**
- * No command
- *
- */
+
 public class NoCommand extends Command {
 	
 	private static final Logger LOG = LogManager.getLogger(NoCommand.class);

@@ -22,10 +22,7 @@ import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
 
-/**
- * Login command
- * 
- */
+
 public class LoginCommand extends Command {
 
 	private static final Logger LOG = LogManager.getLogger(LoginCommand.class);

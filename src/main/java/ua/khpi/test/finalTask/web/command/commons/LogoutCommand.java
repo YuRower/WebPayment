@@ -22,10 +22,7 @@ import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
 
-/**
- * Logout command
- * 
- */
+
 public class LogoutCommand extends Command {
 	
 	private static final Logger LOG = LogManager.getLogger(LogoutCommand.class);
