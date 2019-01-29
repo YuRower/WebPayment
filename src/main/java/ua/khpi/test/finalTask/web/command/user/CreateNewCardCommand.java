@@ -3,7 +3,6 @@ package ua.khpi.test.finalTask.web.command.user;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Random;
 
 import javax.servlet.ServletException;
@@ -14,14 +13,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.khpi.test.finalTask.entity.Account;
 import ua.khpi.test.finalTask.entity.Card;
 import ua.khpi.test.finalTask.entity.User;
 import ua.khpi.test.finalTask.entity.enums.Fee;
-import ua.khpi.test.finalTask.entity.enums.UserType;
 import ua.khpi.test.finalTask.exception.ApplicationException;
 import ua.khpi.test.finalTask.logic.UserLogic;
-import ua.khpi.test.finalTask.utils.RegularExpressions;
 import ua.khpi.test.finalTask.web.Path;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
@@ -60,16 +56,16 @@ public class CreateNewCardCommand extends Command {
 			expDate = LocalDate.now().plusYears(3);
 
 		}
-		BigDecimal cardNumber = generate();
+		BigDecimal cardNumber = generateCartNumber();
 		Card card = new Card(cardNumber, expDate, cardType, fee,user.getId());
 		userLogic.insertCard(card);
 		LOG.debug("Command finished");
 		LOG.debug("cardType" +cardType);
 
-		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_ACCOUNTS);
+		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_CARDS);
 	}
 
-	public BigDecimal generate() {
+	public BigDecimal generateCartNumber() {
 		String bin = "5169";
 		int length = 16;
 		Random random = new Random(System.currentTimeMillis());

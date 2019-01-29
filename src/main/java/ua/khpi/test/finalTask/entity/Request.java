@@ -1,37 +1,20 @@
 package ua.khpi.test.finalTask.entity;
 
-public class Request{
+import java.io.Serializable;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Request implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int userId;
 	private int accountId;
 	
-	public Request() {	}
-	
-	public Request(int userId, int accountId) {
-		super();
-		this.userId = userId;
-		this.accountId = accountId;
-	}
-
-	public int getUserId() {
-		return this.userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public int getAccountId() {
-		return this.accountId;
-	}
-
-	public void setAccountId(int accountId) {
-		this.accountId = accountId;
-	}
-
-	@Override
-	public String toString() {
-		return "Request [userId=" + userId + ", accountId=" + accountId +"]";
-	}
-
 }

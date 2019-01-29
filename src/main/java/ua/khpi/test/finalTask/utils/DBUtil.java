@@ -1,26 +1,26 @@
 package ua.khpi.test.finalTask.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+public class DBUtil {
+	private static final Logger LOG = LogManager.getLogger(DBUtil.class);
 
-	public class DBUtil {
+	private static SessionFactory factory;
 
-	    private static SessionFactory factory;
+	static {
+		try {
+			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+		} catch (HibernateException e) {
+			LOG.error(e);
+		}
+	}
 
-	    static {
-	        try {
-	             factory = new Configuration()
-	                    .configure("hibernate.cfg.xml")
-	                    .buildSessionFactory();
-	        } catch (HibernateException e) {
-	            e.printStackTrace();
-	        }
-	    }
-
-	    public static SessionFactory getSessionFactory() {
-	        return factory;
-	    }
+	public static SessionFactory getSessionFactory() {
+		return factory;
+	}
 
 }

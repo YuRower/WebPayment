@@ -3,7 +3,7 @@
 
 <html>
 
-<c:set var="title" value="Validation completed" />
+<c:set var="title" value="Registration completed" />
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
 <file:isUserLogged />
 
@@ -13,7 +13,7 @@
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
 
 		<tr>
-			<td class="content center"><fmt:message key="val.compl" /></td>
+			<td class="content center"><fmt:message key="cart.deleted" /></td>
 		</tr>
 
 		<%@ include file="/WEB-INF/jspf/footer.jspf"%>

@@ -9,9 +9,7 @@
 <body>
 	<table id="main-container">
 
-		<%-- HEADER --%>
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
-		<%-- HEADER --%>
 
 		<tr><td class="content center">
 			<h3><fmt:message key="admin.actions.header"/></h3>
@@ -48,13 +46,7 @@
 			<input type = "number" name="accountId" placeholder="Account ID"/>
 			<input type="submit" value="<fmt:message key="admin.actions.ua"/>" /></form>
 			
-			<p>
-			Get accounts, wich have balance greater than:
-			</p>
-			<form action="controller" method="POST">
-			<input type="hidden" name="command" value="getAccountsGreater" />
-			<input type = "number" name="balance" placeholder="balance"/>
-			<input type="submit" value="exec" /></form>
+		
 			
 		</td></tr>
 		<%@ include file="/WEB-INF/jspf/footer.jspf"%>

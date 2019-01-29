@@ -5,13 +5,8 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-
-import ua.khpi.test.finalTask.dao.AccountDAO;
-import ua.khpi.test.finalTask.dao.RequestDAO;
 import ua.khpi.test.finalTask.entity.Account;
 import ua.khpi.test.finalTask.entity.Request;
 import ua.khpi.test.finalTask.entity.enums.AccountStatus;
@@ -21,7 +16,6 @@ import ua.khpi.test.finalTask.web.Path;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
-
 
 public class RequestResponseCommand extends Command {
 
@@ -63,7 +57,7 @@ public class RequestResponseCommand extends Command {
 	}
 
 	private void unlockAccount(int usrId, int accId) throws ApplicationException {
-	
+
 		Account account = adminLogic.getAccEntityById(accId);
 		LOG.trace("Account to be unlocked --> " + account);
 		account.setAccountStatusId(AccountStatus.OPEN.ordinal());
@@ -74,7 +68,7 @@ public class RequestResponseCommand extends Command {
 	}
 
 	private void ignoreRequest(int usrId, int accId) throws ApplicationException {
-	
+
 		Request request = new Request(usrId, accId);
 		LOG.trace("Removing request --> " + request);
 		adminLogic.removeRequest(request);

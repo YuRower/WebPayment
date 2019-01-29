@@ -273,12 +273,6 @@ public class UserDAOImpl implements UserDAO {
 		return result;
 	}
 
-	/**
-	 * Method that extracts entities from result set
-	 * @param rs result set
-	 * @return entity
-	 * @throws SQLException
-	 */
 	private User extractUser(ResultSet rs) throws SQLException {
 		User user = new User();
 		user.setId(rs.getInt(USER_ID));

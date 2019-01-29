@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.khpi.test.finalTask.connection.util.TransactionManager;
 import ua.khpi.test.finalTask.entity.User;
 import ua.khpi.test.finalTask.exception.ConnectionException;
 import ua.khpi.test.finalTask.exception.DBException;
@@ -17,7 +16,7 @@ public class Superuser extends ApplicationLogic {
 		try {
 			return userDao.getAllAdmins();
 		} catch (ConnectionException e) {
-			e.printStackTrace();
+			LOG.error(e);
 			throw e;
 		}
 	}
@@ -25,14 +24,11 @@ public class Superuser extends ApplicationLogic {
 	public boolean addEntity(User user) throws DBException {
 		boolean flag = false;
 		try {
-			TransactionManager.beginTransaction();
 			flag = userDao.addEntity(user);
 			LOG.debug("Addition operation status = " + flag);
-			TransactionManager.commitTransaction();
 			return flag;
 		} catch (ConnectionException e) {
-			e.printStackTrace();
-			TransactionManager.rollbackTransaction();
+			LOG.error(e);
 		}
 		return flag;
 

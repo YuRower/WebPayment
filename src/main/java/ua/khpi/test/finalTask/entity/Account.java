@@ -10,8 +10,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "accounts")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Account extends AbstractEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,58 +40,6 @@ public class Account extends AbstractEntity implements Serializable {
 		this.cards.setId(cardsId);
 	}
 	
-public Account() {}
-	
-	
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public BigDecimal getBalance() {
-		return this.balance;
-	}
-
-	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
-	}
-
-	public int getAccountStatusId() {
-		return this.accountStatusId;
-	}
-
-	public void setAccountStatusId(int accountStatusId) {
-		this.accountStatusId = accountStatusId;
-	}
-
-	
-
-
-	/**
-	 * @return the cards
-	 */
-	public Card getCards() {
-		return cards;
-	}
-
-
-
-	
-
-
-	/**
-	 * @param cards the cards to set
-	 */
-	public void setCards(Card cards) {
-		this.cards = cards;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Account [name=" + name + ", balance=" + balance + ", accountStatusId=" + accountStatusId + ", cards="

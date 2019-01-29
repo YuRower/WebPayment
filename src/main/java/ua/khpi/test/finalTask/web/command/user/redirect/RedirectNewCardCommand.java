@@ -1,4 +1,4 @@
-package ua.khpi.test.finalTask.web.command.user;
+package ua.khpi.test.finalTask.web.command.user.redirect;
 
 import java.io.IOException;
 

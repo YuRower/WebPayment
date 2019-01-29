@@ -9,16 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.khpi.test.finalTask.dao.AbstractDAOFactory;
-import ua.khpi.test.finalTask.dao.AbstractDAOFactory.FactoryTypes;
-import ua.khpi.test.finalTask.dao.UserDAO;
 import ua.khpi.test.finalTask.entity.User;
 import ua.khpi.test.finalTask.entity.enums.UserStatus;
 import ua.khpi.test.finalTask.entity.enums.UserType;
 import ua.khpi.test.finalTask.exception.ApplicationException;
 import ua.khpi.test.finalTask.logic.Superuser;
 import ua.khpi.test.finalTask.utils.PasswordHasher;
-import ua.khpi.test.finalTask.utils.RegularExpressions;
 import ua.khpi.test.finalTask.web.Path;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
@@ -29,7 +25,6 @@ import ua.khpi.test.finalTask.web.command.commons.validation.Middleware;
 import ua.khpi.test.finalTask.web.command.commons.validation.NameValidator;
 import ua.khpi.test.finalTask.web.command.commons.validation.PasswordValidator;
 import ua.khpi.test.finalTask.web.command.commons.validation.SurnameValidator;
-
 
 public class AddAdminCommand extends Command {
 

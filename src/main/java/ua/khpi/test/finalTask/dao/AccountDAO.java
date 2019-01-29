@@ -6,9 +6,5 @@ import ua.khpi.test.finalTask.exception.ConnectionException;
 import ua.khpi.test.finalTask.exception.DBException;
 
 public interface AccountDAO extends CrudDAO<Account>{
-
-
 	List<Account> getAllAccounts() throws DBException, ConnectionException;
-
-
 }

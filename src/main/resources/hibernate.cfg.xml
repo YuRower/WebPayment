@@ -10,7 +10,7 @@
 		<property name="connection.pool_size">20 </property>
 		<property name="current_session_context_class">thread </property>
 		<property name="hbm2ddl.auto">update</property>
-		<property name="show_sql">true</property>
+		<property name="show_sql">false</property>
 		<mapping class="ua.khpi.test.finalTask.entity.User" />
 		<mapping class="ua.khpi.test.finalTask.entity.Card" />
 		<mapping class="ua.khpi.test.finalTask.entity.Account" />

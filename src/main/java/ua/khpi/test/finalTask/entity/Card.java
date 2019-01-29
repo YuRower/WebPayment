@@ -14,11 +14,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Table(name="cards")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Card extends AbstractEntity implements Serializable {
 	
 	/**
@@ -32,9 +38,8 @@ public class Card extends AbstractEntity implements Serializable {
 				+ cardFeeid + ", account=" + account + "]";
 	}
 	
-	public Card() {
 		
-	}
+	
 	@Column (name = "card_number")
 	private BigDecimal cardNumber;
 	
@@ -45,20 +50,6 @@ public class Card extends AbstractEntity implements Serializable {
 	private String cardName;
 	@Column (name = "card_fee_id")
 	private int cardFeeid;
-	/**
-	 * @return the account
-	 */
-	public List<Account> getAccount() {
-		return account;
-	}
-
-	/**
-	 * @param account the account to set
-	 */
-	public void setAccount(ArrayList<Account> account) {
-		this.account = account;
-	}
-	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable=false)
@@ -77,59 +68,5 @@ public class Card extends AbstractEntity implements Serializable {
 		this.user.setId(userId);
 	}
 
-	public BigDecimal getCardNumber() {
-		return cardNumber;
-	}
-
-	public void setCardNumber(BigDecimal cardNumber) {
-		this.cardNumber = cardNumber;
-	}
-
-	public LocalDate getExpDate() {
-		return expDate;
-	}
-
-	public void setExpDate(LocalDate expDate) {
-		this.expDate = expDate;
-	}
-
-	public String getCardName() {
-		return cardName;
-	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
-	}
-
-	public int getCardFeeid() {
-		return cardFeeid;
-	}
-
-	public void setCardFeeid(int cardFeeid) {
-		this.cardFeeid = cardFeeid;
-	}
-
-	/**
-	 * @return the user
-	 */
-	public User getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	/**
-	 * @param account the account to set
-	 */
-	public void setAccount(List<Account> account) {
-		this.account = account;
-	}
-
-	
 
 }

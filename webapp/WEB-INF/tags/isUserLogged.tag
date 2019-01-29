@@ -1,5 +1,5 @@
-<%@ tag body-content="empty" %> 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ tag body-content="empty"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${not empty user}">
 	<c:choose>
 		<c:when test="${userType.name == 'admin' }">

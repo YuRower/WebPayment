@@ -12,19 +12,15 @@
 
 	<table id="main-container">
 
-		<%-- HEADER --%>
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
-		<%-- HEADER --%>
 
 		<tr >
 			<td class="content center">
-			<%-- CONTENT --%>
 				
 				<h2 class="error">
 					<fmt:message key="error.header"/>
 				</h2>
 			
-				<%-- this way we obtain an information about an exception (if it has been occurred) --%>
 				<c:set var="code" value="${requestScope['javax.servlet.error.status_code']}"/>
 				<c:set var="message" value="${requestScope['javax.servlet.error.message']}"/>
 				<c:set var="exception" value="${requestScope['javax.servlet.error.exception']}"/>
@@ -41,12 +37,10 @@
 					<% exception.printStackTrace(new PrintWriter(out)); %>
 				</c:if>
 				
-				<%-- if we get this page using forward --%>
 				<c:if test="${not empty requestScope.errorMessage}">
 					<h3>${requestScope.errorMessage}</h3>
 				</c:if>
 
-			<%-- CONTENT --%>
 			</td>
 		</tr>
 

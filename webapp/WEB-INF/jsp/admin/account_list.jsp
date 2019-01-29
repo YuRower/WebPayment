@@ -3,15 +3,13 @@
 
 <html>
 
-<c:set var="title" value="Epam task" />
+<c:set var="title" value="Final task" />
 <%@ include file="/WEB-INF/jspf/head.jspf"%>
 
 <body>
 	<table id="main-container">
 
-		<%-- HEADER --%>
 		<%@ include file="/WEB-INF/jspf/header.jspf"%>
-		<%-- HEADER --%>
 
 		<tr>
 			<td class="content center"><c:if test="${not empty accounts}">
@@ -19,7 +17,6 @@
 					<table class="center">
 						<tr>
 							<th>id</th>
-							<th>user id</th>
 							<th>name</th>
 							<th>balance</th>
 							<th>status</th>
@@ -28,7 +25,6 @@
 						<c:forEach var="item" items="${accounts}">
 							<tr>
 								<td><c:out value="${item.id}" /></td>
-								<td><c:out value="${item.userId}" /></td>
 								<td><c:out value="${item.name}" /></td>
 								<td><c:out value="${item.balance}" /></td>
 								<c:choose>

@@ -18,12 +18,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.khpi.test.finalTask.exception.ApplicationException;
-import ua.khpi.test.finalTask.utils.mail.ColleagueEmailDecorator;
 import ua.khpi.test.finalTask.utils.mail.Email;
 import ua.khpi.test.finalTask.utils.mail.EmailDecorator;
 import ua.khpi.test.finalTask.utils.mail.FormalEmailDecorator;
-import ua.khpi.test.finalTask.utils.mail.IEmail;
-import ua.khpi.test.finalTask.utils.mail.SecureEmailDecorator;
 
 public class MailSender {
 
@@ -74,16 +71,11 @@ public class MailSender {
 		String link = "<a href = \"http://localhost:8080/WebPayment/controller?command=verify&email=" + recipient
 				+ "&code=" + code + "\">this link</a>";
 		String content = "Follow " + link + " in order to verify your email.<br/>Payment system mail bot";
-		EmailDecorator external = new SecureEmailDecorator(new ColleagueEmailDecorator(
-				new FormalEmailDecorator(
-						new Email(content))));
-		EmailDecorator external1 = new ColleagueEmailDecorator(
-				new FormalEmailDecorator(
-						new Email(content)));
-		EmailDecorator external2 = new  FormalEmailDecorator(new Email(content));
-		
-		LOG.info(external.getContents());
-		LOG.info(external1.getContents());
+		/*EmailDecorator external = new SecureEmailDecorator(
+				new ColleagueEmailDecorator(new FormalEmailDecorator(new Email(content))));*/
+		/*EmailDecorator external1 = new ColleagueEmailDecorator(new FormalEmailDecorator(new Email(content)));*/
+		EmailDecorator external2 = new FormalEmailDecorator(new Email(content));
+		LOG.info(external2.getContents());
 
 		try {
 			message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+import lombok.NonNull;
 import ua.khpi.test.finalTask.entity.Account;
 import ua.khpi.test.finalTask.exception.ApplicationException;
 import ua.khpi.test.finalTask.logic.UserLogic;
@@ -42,7 +42,7 @@ public class ChangeAccountNameCommand extends Command {
 		return new RequestProcessorInfo(ProcessorMode.REDIRECT, Path.COMMAND_LIST_ACCOUNTS);
 	}
 
-	private void changeAccountName(String accountName, String accIdStr) throws ApplicationException {
+	private void changeAccountName(String accountName, @NonNull String accIdStr) throws ApplicationException {
 
 		Account account = userLogic.getEntityById(Integer.parseInt(accIdStr));
 		LOG.trace("Editing account --> " + account);

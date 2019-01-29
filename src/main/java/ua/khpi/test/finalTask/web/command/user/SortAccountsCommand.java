@@ -1,6 +1,8 @@
 package ua.khpi.test.finalTask.web.command.user;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,46 +20,43 @@ import ua.khpi.test.finalTask.web.RequestProcessorInfo;
 import ua.khpi.test.finalTask.web.RequestProcessorInfo.ProcessorMode;
 import ua.khpi.test.finalTask.web.command.Command;
 
-
-
 public class SortAccountsCommand extends Command {
-	
+
 	private static final Logger LOG = LogManager.getLogger(SortAccountsCommand.class);
 
 	@Override
 	public RequestProcessorInfo execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, ApplicationException {
 		LOG.debug("Command starts");
-		
+
 		HttpSession session = request.getSession();
 		@SuppressWarnings("unchecked")
 		List<Account> accounts = (List<Account>) session.getAttribute("accounts");
-		LOG.trace("Accounts obtained: "+accounts);
-		if(accounts == null) {
+		LOG.trace("Accounts obtained: " + accounts);
+		if (accounts == null) {
 			LOG.trace("Cant get accounts from session");
-			throw new ApplicationException("Can't get accounts");
-		}
-		
-		String sortBy = (String) session.getAttribute("accountsOrder");
-		LOG.trace("List will be sorted by "+sortBy);
-		switch (sortBy) {
+		} else {
+			String sortBy = (String) session.getAttribute("accountsOrder");
+			LOG.trace("List will be sorted by " + sortBy);
+			switch (sortBy) {
 			case "number":
-				accounts.sort((acc1, acc2)->acc1.getId()-acc2.getId());
+				accounts.sort((acc1, acc2) -> acc1.getId() - acc2.getId());
+				//Arrays.sort(accounts,Comparator.comparing(Account ::getId));
 				break;
 			case "balance":
-				accounts.sort((acc1, acc2)->acc2.getBalance().compareTo(acc1.getBalance()));
+				accounts.sort((acc1, acc2) -> acc2.getBalance().compareTo(acc1.getBalance()));
 				break;
 			case "name":
-				accounts.sort((acc1, acc2)->acc1.getName().compareTo(acc2.getName()));
+				accounts.sort((acc1, acc2) -> acc1.getName().compareTo(acc2.getName()));
 				break;
 			default:
 				throw new ApplicationException("Can't get sort parameter");
+			}
 		}
-		LOG.trace("Sorted accounts: "+accounts);
+		LOG.trace("Sorted accounts: " + accounts);
 
 		session.setAttribute("accounts", accounts);
 		
-		LOG.debug("Command finished");
 		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.PAGE_LIST_ACCOUNTS);
 	}
 
