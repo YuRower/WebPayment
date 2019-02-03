@@ -2,6 +2,7 @@ package ua.khpi.test.finalTask.web.command.user;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -40,11 +41,10 @@ public class SortAccountsCommand extends Command {
 			LOG.trace("List will be sorted by " + sortBy);
 			switch (sortBy) {
 			case "number":
-				accounts.sort((acc1, acc2) -> acc1.getId() - acc2.getId());
-				//Arrays.sort(accounts,Comparator.comparing(Account ::getId));
+				accounts.stream().sorted(Comparator.comparing(Account::getId));
 				break;
 			case "balance":
-				accounts.sort((acc1, acc2) -> acc2.getBalance().compareTo(acc1.getBalance()));
+				Collections.sort(accounts, Comparator.comparing(Account::getBalance));
 				break;
 			case "name":
 				accounts.sort((acc1, acc2) -> acc1.getName().compareTo(acc2.getName()));
@@ -56,7 +56,7 @@ public class SortAccountsCommand extends Command {
 		LOG.trace("Sorted accounts: " + accounts);
 
 		session.setAttribute("accounts", accounts);
-		
+
 		return new RequestProcessorInfo(ProcessorMode.FORWARD, Path.PAGE_LIST_ACCOUNTS);
 	}
 
